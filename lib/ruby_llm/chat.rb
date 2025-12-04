@@ -6,8 +6,9 @@ module RubyLLM
     include Enumerable
 
     attr_reader :model, :messages, :tools, :params, :headers, :schema
+    attr_accessor :max_tool_iterations
 
-    def initialize(model: nil, provider: nil, assume_model_exists: false, context: nil)
+    def initialize(model: nil, provider: nil, assume_model_exists: false, context: nil, max_tool_iterations: 10)
       if assume_model_exists && !provider
         raise ArgumentError, 'Provider must be specified if assume_model_exists is true'
       end
@@ -22,6 +23,8 @@ module RubyLLM
       @params = {}
       @headers = {}
       @schema = nil
+      @max_tool_iterations = max_tool_iterations
+      @tool_iteration_count = 0
       @on = {
         new_message: nil,
         end_message: nil,
@@ -31,6 +34,7 @@ module RubyLLM
     end
 
     def ask(message = nil, with: nil, &)
+      @tool_iteration_count = 0 # Reset counter for new conversation turn
       add_message role: :user, content: build_content(message, with)
       complete(&)
     end
@@ -189,6 +193,18 @@ module RubyLLM
       halt_result = nil
 
       response.tool_calls.each_value do |tool_call|
+        @tool_iteration_count += 1
+
+        # Check if we've exceeded max iterations
+        if @max_tool_iterations && @tool_iteration_count > @max_tool_iterations
+          error_message = "Maximum tool iterations (#{@max_tool_iterations}) exceeded. " \
+                          "The model appears to be stuck in a tool-calling loop. " \
+                          "This usually indicates the model doesn't know when to stop calling tools. " \
+                          "Consider using a different model with better tool calling support, " \
+                          "or increase max_tool_iterations if this is expected behavior."
+          raise StandardError, error_message
+        end
+
         @on[:new_message]&.call
         @on[:tool_call]&.call(tool_call)
         result = execute_tool tool_call

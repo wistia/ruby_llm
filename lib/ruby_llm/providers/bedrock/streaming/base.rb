@@ -14,7 +14,7 @@ module RubyLLM
           end
 
           def stream_url
-            "model/#{@model_id}/invoke-with-response-stream"
+            "model/#{@model_id}/converse-stream"
           end
 
           def stream_response(connection, payload, additional_headers = {}, &block)

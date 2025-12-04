@@ -48,6 +48,16 @@ module RubyLLM
 
       def resolve(model_id, provider: nil, assume_exists: false, config: nil) # rubocop:disable Metrics/PerceivedComplexity
         config ||= RubyLLM.config
+
+        # Parse provider/model format (e.g., "bedrock/global.amazon.nova-2-lite-v1:0")
+        provider_from_prefix = nil
+        if model_id.include?('/') && !provider
+          parts = model_id.split('/', 2)
+          provider_from_prefix = parts[0]
+          provider = parts[0]
+          model_id = parts[1]
+        end
+
         provider_class = provider ? Provider.providers[provider.to_sym] : nil
 
         if provider_class
@@ -71,7 +81,26 @@ module RubyLLM
 
           model ||= Model::Info.default(model_id, provider_instance.slug)
         else
-          model = Models.find model_id, provider
+          # If provider was specified via prefix (e.g., "bedrock/..."), try to find the model
+          # If not found, allow raw model ID for Bedrock
+          if provider_from_prefix
+            begin
+              model = Models.find(model_id, provider)
+            rescue ModelNotFoundError
+              # Allow raw model IDs for Bedrock when using provider prefix
+              if provider_from_prefix == 'bedrock'
+                provider_class = Provider.providers[:bedrock] || raise(Error, "Unknown provider: bedrock")
+                provider_instance = provider_class.new(config)
+                model = Model::Info.default(model_id, provider_instance.slug)
+                return [model, provider_instance]
+              else
+                raise
+              end
+            end
+          else
+            model = Models.find(model_id, provider)
+          end
+
           provider_class = Provider.providers[model.provider.to_sym] || raise(Error,
                                                                               "Unknown provider: #{model.provider}")
           provider_instance = provider_class.new(config)

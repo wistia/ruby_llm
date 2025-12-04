@@ -31,9 +31,14 @@ module RubyLLM
           end
 
           def process_json_data(json_data, &)
-            return unless json_data['bytes']
+            # Converse Stream API sends JSON directly (no base64 encoding)
+            # Old invoke API used base64-encoded bytes
+            data = if json_data['bytes']
+                     decode_and_parse_data(json_data)
+                   else
+                     json_data
+                   end
 
-            data = decode_and_parse_data(json_data)
             create_and_yield_chunk(data, &)
           end
 

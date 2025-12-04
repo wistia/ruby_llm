@@ -55,6 +55,12 @@
     "deepseek": "deepseek-chat",
     "openrouter": "deepseek/deepseek-chat"
   },
+  "deepseek-r1": {
+    "bedrock": "us.deepseek.r1-v1:0"
+  },
+  "deepseek-v3": {
+    "bedrock": "deepseek.v3-v1:0"
+  },
   "gemini-2.0-flash": {
     "gemini": "gemini-2.0-flash",
     "vertexai": "gemini-2.0-flash"
@@ -130,7 +136,8 @@
   },
   "gemma-3-4b-it": {
     "gemini": "gemma-3-4b-it",
-    "openrouter": "google/gemma-3-4b-it"
+    "openrouter": "google/gemma-3-4b-it",
+    "bedrock": "google.gemma-3-4b-it"
   },
   "gemma-3n-e4b-it": {
     "gemini": "gemma-3n-e4b-it",
@@ -246,11 +253,55 @@
   },
   "gpt-oss-120b": {
     "openai": "gpt-oss-120b",
-    "openrouter": "openai/gpt-oss-120b"
+    "openrouter": "openai/gpt-oss-120b",
+    "bedrock": "openai.gpt-oss-120b-1:0"
   },
   "gpt-oss-20b": {
     "openai": "gpt-oss-20b",
-    "openrouter": "openai/gpt-oss-20b"
+    "openrouter": "openai/gpt-oss-20b",
+    "bedrock": "openai.gpt-oss-20b-1:0"
+  },
+  "kimi-k2-thinking": {
+    "bedrock": "moonshot.kimi-k2-thinking"
+  },
+  "llama-4-maverick-17b": {
+    "bedrock": "us.meta.llama4-maverick-17b-instruct-v1:0"
+  },
+  "llama-4-scout-17b": {
+    "bedrock": "us.meta.llama4-scout-17b-instruct-v1:0"
+  },
+  "minimax-m2": {
+    "bedrock": "minimax.minimax-m2"
+  },
+  "mistral-large-3": {
+    "bedrock": "mistral.mistral-large-3-675b-instruct"
+  },
+  "nova-2-lite": {
+    "bedrock": "global.amazon.nova-2-lite-v1:0"
+  },
+  "nova-lite": {
+    "bedrock": "us.amazon.nova-lite-v1:0"
+  },
+  "nova-micro": {
+    "bedrock": "us.amazon.nova-micro-v1:0"
+  },
+  "nova-premier": {
+    "bedrock": "us.amazon.nova-premier-v1:0"
+  },
+  "nova-pro": {
+    "bedrock": "us.amazon.nova-pro-v1:0"
+  },
+  "pixtral-large-2502": {
+    "bedrock": "us.mistral.pixtral-large-2502-v1:0"
+  },
+  "qwen3-coder-480b": {
+    "bedrock": "qwen.qwen3-coder-480b-a35b-v1:0"
+  },
+  "qwen3-next-80b": {
+    "bedrock": "qwen.qwen3-next-80b-a3b"
+  },
+  "qwen3-vl-235b": {
+    "bedrock": "qwen.qwen3-vl-235b-a22b"
   },
   "imagen-4.0-generate-001": {
     "gemini": "imagen-4.0-generate-001",
