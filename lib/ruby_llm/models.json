@@ -33222,5 +33222,885 @@
       "supported_actions": null,
       "publisher_model_template": "projects/{project}/locations/{location}/publishers/google/models/textembedding-gecko@003"
     }
+  },
+  {
+    "id": "us.deepseek.r1-v1:0",
+    "name": "R1 V1:0",
+    "provider": "bedrock",
+    "family": "deepseek_r1",
+    "created_at": null,
+    "context_window": 128000,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 1.35,
+          "output_per_million": 5.4
+        },
+        "batch": {
+          "input_per_million": 0.675,
+          "output_per_million": 2.7
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "DeepSeek",
+      "inference_types": [],
+      "streaming_supported": true,
+      "input_modalities": [],
+      "output_modalities": []
+    }
+  },
+  {
+    "id": "deepseek.v3-v1:0",
+    "name": "V3 V1:0",
+    "provider": "bedrock",
+    "family": "deepseek_v3",
+    "created_at": null,
+    "context_window": 163840,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.58,
+          "output_per_million": 1.68
+        },
+        "batch": {
+          "input_per_million": 0.29,
+          "output_per_million": 0.84
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "DeepSeek",
+      "inference_types": [],
+      "streaming_supported": true,
+      "input_modalities": [],
+      "output_modalities": []
+    }
+  },
+  {
+    "id": "google.gemma-3-12b-it",
+    "name": "Gemma 3 12b It",
+    "provider": "bedrock",
+    "family": "gemma3_12b",
+    "created_at": null,
+    "context_window": 128000,
+    "max_output_tokens": 128000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.09,
+          "output_per_million": 0.29
+        },
+        "batch": {
+          "input_per_million": 0.045,
+          "output_per_million": 0.145
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Google",
+      "inference_types": [],
+      "streaming_supported": true,
+      "input_modalities": [],
+      "output_modalities": []
+    }
+  },
+  {
+    "id": "google.gemma-3-27b-it",
+    "name": "Gemma 3 27b It",
+    "provider": "bedrock",
+    "family": "gemma3_27b",
+    "created_at": null,
+    "context_window": 128000,
+    "max_output_tokens": 128000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.23,
+          "output_per_million": 0.38
+        },
+        "batch": {
+          "input_per_million": 0.115,
+          "output_per_million": 0.19
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Google",
+      "inference_types": [],
+      "streaming_supported": true,
+      "input_modalities": [],
+      "output_modalities": []
+    }
+  },
+  {
+    "id": "google.gemma-3-4b-it",
+    "name": "Gemma 3 4b It",
+    "provider": "bedrock",
+    "family": "gemma3_4b",
+    "created_at": null,
+    "context_window": 128000,
+    "max_output_tokens": 128000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.04,
+          "output_per_million": 0.08
+        },
+        "batch": {
+          "input_per_million": 0.02,
+          "output_per_million": 0.04
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Google",
+      "inference_types": [],
+      "streaming_supported": true,
+      "input_modalities": [],
+      "output_modalities": []
+    }
+  },
+  {
+    "id": "openai.gpt-oss-120b-1:0",
+    "name": "Gpt Oss 120b 1:0",
+    "provider": "bedrock",
+    "family": "gpt_oss_120b",
+    "created_at": null,
+    "context_window": 128000,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.15,
+          "output_per_million": 0.6
+        },
+        "batch": {
+          "input_per_million": 0.075,
+          "output_per_million": 0.3
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Unknown",
+      "inference_types": [],
+      "streaming_supported": true,
+      "input_modalities": [],
+      "output_modalities": []
+    }
+  },
+  {
+    "id": "openai.gpt-oss-20b-1:0",
+    "name": "Gpt Oss 20b 1:0",
+    "provider": "bedrock",
+    "family": "gpt_oss_20b",
+    "created_at": null,
+    "context_window": 128000,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.07,
+          "output_per_million": 0.3
+        },
+        "batch": {
+          "input_per_million": 0.035,
+          "output_per_million": 0.15
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Unknown",
+      "inference_types": [],
+      "streaming_supported": true,
+      "input_modalities": [],
+      "output_modalities": []
+    }
+  },
+  {
+    "id": "moonshot.kimi-k2-thinking",
+    "name": "Kimi K2 Thinking",
+    "provider": "bedrock",
+    "family": "kimi_k2_thinking",
+    "created_at": null,
+    "context_window": 256000,
+    "max_output_tokens": 16400,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.6,
+          "output_per_million": 2.5
+        },
+        "batch": {
+          "input_per_million": 0.3,
+          "output_per_million": 1.25
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Moonshot",
+      "inference_types": [],
+      "streaming_supported": true,
+      "input_modalities": [],
+      "output_modalities": []
+    }
+  },
+  {
+    "id": "us.meta.llama4-maverick-17b-instruct-v1:0",
+    "name": "Llama4 Maverick 17b Instruct V1:0",
+    "provider": "bedrock",
+    "family": "llama4_maverick",
+    "created_at": null,
+    "context_window": 1000000,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.24,
+          "output_per_million": 0.97
+        },
+        "batch": {
+          "input_per_million": 0.12,
+          "output_per_million": 0.485
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Meta",
+      "inference_types": [],
+      "streaming_supported": true,
+      "input_modalities": [],
+      "output_modalities": []
+    }
+  },
+  {
+    "id": "us.meta.llama4-scout-17b-instruct-v1:0",
+    "name": "Llama4 Scout 17b Instruct V1:0",
+    "provider": "bedrock",
+    "family": "llama4_scout",
+    "created_at": null,
+    "context_window": 3500000,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.17,
+          "output_per_million": 0.66
+        },
+        "batch": {
+          "input_per_million": 0.085,
+          "output_per_million": 0.33
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Meta",
+      "inference_types": [],
+      "streaming_supported": true,
+      "input_modalities": [],
+      "output_modalities": []
+    }
+  },
+  {
+    "id": "minimax.minimax-m2",
+    "name": "Minimax M2",
+    "provider": "bedrock",
+    "family": "minimax_m2",
+    "created_at": null,
+    "context_window": 400000,
+    "max_output_tokens": 128000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.3,
+          "output_per_million": 1.2
+        },
+        "batch": {
+          "input_per_million": 0.15,
+          "output_per_million": 0.6
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Minimax",
+      "inference_types": [],
+      "streaming_supported": true,
+      "input_modalities": [],
+      "output_modalities": []
+    }
+  },
+  {
+    "id": "mistral.mistral-large-3-675b-instruct",
+    "name": "Mistral Large 3 675b Instruct",
+    "provider": "bedrock",
+    "family": "mistral_large_3",
+    "created_at": null,
+    "context_window": 256000,
+    "max_output_tokens": 32768,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.5,
+          "output_per_million": 1.5
+        },
+        "batch": {
+          "input_per_million": 0.25,
+          "output_per_million": 0.75
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Mistral",
+      "inference_types": [],
+      "streaming_supported": true,
+      "input_modalities": [],
+      "output_modalities": []
+    }
+  },
+  {
+    "id": "global.amazon.nova-2-lite-v1:0",
+    "name": "Nova 2 Lite V1:0",
+    "provider": "bedrock",
+    "family": "nova_2_lite",
+    "created_at": null,
+    "context_window": 1000000,
+    "max_output_tokens": 10000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.33,
+          "output_per_million": 2.75
+        },
+        "batch": {
+          "input_per_million": 0.165,
+          "output_per_million": 1.375
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Amazon",
+      "inference_types": [],
+      "streaming_supported": true,
+      "input_modalities": [],
+      "output_modalities": []
+    }
+  },
+  {
+    "id": "us.amazon.nova-lite-v1:0",
+    "name": "Nova Lite V1:0",
+    "provider": "bedrock",
+    "family": "nova_lite",
+    "created_at": null,
+    "context_window": 300000,
+    "max_output_tokens": 10000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.06,
+          "output_per_million": 0.24
+        },
+        "batch": {
+          "input_per_million": 0.03,
+          "output_per_million": 0.12
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Amazon",
+      "inference_types": [],
+      "streaming_supported": true,
+      "input_modalities": [],
+      "output_modalities": []
+    }
+  },
+  {
+    "id": "us.amazon.nova-micro-v1:0",
+    "name": "Nova Micro V1:0",
+    "provider": "bedrock",
+    "family": "nova_micro",
+    "created_at": null,
+    "context_window": 128000,
+    "max_output_tokens": 10000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.035,
+          "output_per_million": 0.14
+        },
+        "batch": {
+          "input_per_million": 0.0175,
+          "output_per_million": 0.07
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Amazon",
+      "inference_types": [],
+      "streaming_supported": true,
+      "input_modalities": [],
+      "output_modalities": []
+    }
+  },
+  {
+    "id": "us.amazon.nova-premier-v1:0",
+    "name": "Nova Premier V1:0",
+    "provider": "bedrock",
+    "family": "nova_premier",
+    "created_at": null,
+    "context_window": 1000000,
+    "max_output_tokens": 10000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2.5,
+          "output_per_million": 12.5
+        },
+        "batch": {
+          "input_per_million": 1.25,
+          "output_per_million": 6.25
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Amazon",
+      "inference_types": [],
+      "streaming_supported": true,
+      "input_modalities": [],
+      "output_modalities": []
+    }
+  },
+  {
+    "id": "us.amazon.nova-pro-v1:0",
+    "name": "Nova Pro V1:0",
+    "provider": "bedrock",
+    "family": "nova_pro",
+    "created_at": null,
+    "context_window": 300000,
+    "max_output_tokens": 10000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.8,
+          "output_per_million": 3.2
+        },
+        "batch": {
+          "input_per_million": 0.4,
+          "output_per_million": 1.6
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Amazon",
+      "inference_types": [],
+      "streaming_supported": true,
+      "input_modalities": [],
+      "output_modalities": []
+    }
+  },
+  {
+    "id": "us.mistral.pixtral-large-2502-v1:0",
+    "name": "Pixtral Large 2502 V1:0",
+    "provider": "bedrock",
+    "family": "pixtral_large_2502",
+    "created_at": null,
+    "context_window": 128000,
+    "max_output_tokens": 4096,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2.0,
+          "output_per_million": 6.0
+        },
+        "batch": {
+          "input_per_million": 1.0,
+          "output_per_million": 3.0
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Mistral",
+      "inference_types": [],
+      "streaming_supported": true,
+      "input_modalities": [],
+      "output_modalities": []
+    }
+  },
+  {
+    "id": "qwen.qwen3-coder-480b-a35b-v1:0",
+    "name": "Qwen3 Coder 480b A35b V1:0",
+    "provider": "bedrock",
+    "family": "qwen3_coder_480b",
+    "created_at": null,
+    "context_window": 131072,
+    "max_output_tokens": 32768,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.45,
+          "output_per_million": 1.8
+        },
+        "batch": {
+          "input_per_million": 0.225,
+          "output_per_million": 0.9
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Alibaba",
+      "inference_types": [],
+      "streaming_supported": true,
+      "input_modalities": [],
+      "output_modalities": []
+    }
+  },
+  {
+    "id": "qwen.qwen3-next-80b-a3b",
+    "name": "Qwen3 Next 80b A3b",
+    "provider": "bedrock",
+    "family": "qwen3_next_80b",
+    "created_at": null,
+    "context_window": 256000,
+    "max_output_tokens": 32000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.15,
+          "output_per_million": 1.2
+        },
+        "batch": {
+          "input_per_million": 0.075,
+          "output_per_million": 0.6
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Alibaba",
+      "inference_types": [],
+      "streaming_supported": true,
+      "input_modalities": [],
+      "output_modalities": []
+    }
+  },
+  {
+    "id": "qwen.qwen3-vl-235b-a22b",
+    "name": "Qwen3 Vl 235b A22b",
+    "provider": "bedrock",
+    "family": "qwen3_vl_235b",
+    "created_at": null,
+    "context_window": 256000,
+    "max_output_tokens": 256000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.53,
+          "output_per_million": 2.66
+        },
+        "batch": {
+          "input_per_million": 0.265,
+          "output_per_million": 1.33
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Alibaba",
+      "inference_types": [],
+      "streaming_supported": true,
+      "input_modalities": [],
+      "output_modalities": []
+    }
   }
 ]
