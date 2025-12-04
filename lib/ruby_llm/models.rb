@@ -98,7 +98,20 @@ module RubyLLM
               end
             end
           else
-            model = Models.find(model_id, provider)
+            # Try to find the model, but allow Bedrock models to use fallback
+            begin
+              model = Models.find(model_id, provider)
+            rescue ModelNotFoundError
+              # Allow raw model IDs for Bedrock even when provider is specified separately
+              if provider.to_s == 'bedrock'
+                provider_class = Provider.providers[:bedrock] || raise(Error, "Unknown provider: bedrock")
+                provider_instance = provider_class.new(config)
+                model = Model::Info.default(model_id, provider_instance.slug)
+                return [model, provider_instance]
+              else
+                raise
+              end
+            end
           end
 
           provider_class = Provider.providers[model.provider.to_sym] || raise(Error,
