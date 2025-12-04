@@ -12,8 +12,9 @@ module RubyLLM
           CONTEXT_WINDOW.fetch(family, 128_000)
         end
 
-        def max_tokens_for(_model_id)
-          4_096
+        def max_tokens_for(model_id)
+          family = model_family(model_id)
+          MAX_TOKENS.fetch(family, 4_096)
         end
 
         def input_price_for(model_id)
@@ -108,6 +109,50 @@ module RubyLLM
           # Mistral
           mistral_large_3: true,
           pixtral_large_2502: true
+        }.freeze
+
+        MAX_TOKENS = {
+          # Claude models
+          claude3_haiku: 4_096,
+          claude3_5_haiku: 8_192,
+          claude3_5_sonnet: 8_192,
+          claude3_7_sonnet: 64_000,
+          claude4_sonnet: 64_000,
+          claude4_opus: 32_000,
+          claude4_1_opus: 32_000,
+          claude4_5_sonnet: 64_000,
+          claude4_5_opus: 64_000,
+          claude4_5_haiku: 64_000,
+          # Nova models
+          nova_2_lite: 10_000,
+          nova_premier: 10_000,
+          nova_pro: 10_000,
+          nova_lite: 10_000,
+          nova_micro: 10_000,
+          # Llama 4 models
+          llama4_maverick: 8192,
+          llama4_scout: 8192,
+          # OpenAI models
+          gpt_oss_120b: 8192,
+          gpt_oss_20b: 8192,
+          # Qwen models
+          qwen3_coder_480b: 32_768,
+          qwen3_vl_235b: 256_000,
+          qwen3_next_80b: 32_000,
+          # Minimax
+          minimax_m2: 128_000,
+          # DeepSeek
+          deepseek_r1: 8_192,
+          deepseek_v3: 8_192,
+          # Gemma
+          gemma3_27b: 128_000,
+          gemma3_12b: 128_000,
+          gemma3_4b: 128_000,
+          # Kimi
+          kimi_k2_thinking: 16_400,
+          # Mistral
+          mistral_large_3: 32_768,
+          pixtral_large_2502: 4_096,
         }.freeze
 
         CONTEXT_WINDOW = {

@@ -68,10 +68,10 @@ module RubyLLM
               provider: slug,
               family: capabilities.model_family(final_model_id),
               created_at: nil,
-              context_window: extract_context_window(model_data),
-              max_output_tokens: extract_max_output_tokens(model_data),
-              modalities: extract_modalities(model_data),
-              capabilities: extract_capabilities(model_data),
+              context_window: capabilities.context_window_for(final_model_id),
+              max_output_tokens: capabilities.max_tokens_for(final_model_id),
+              modalities: capabilities.modalities_for(final_model_id),
+              capabilities: capabilities.capabilities_for(final_model_id),
               pricing: capabilities.pricing_for(final_model_id),
               metadata: {
                 provider_name: model_data['providerName'],
@@ -84,84 +84,21 @@ module RubyLLM
           end
         end
 
-        def extract_context_window(model_data)
+        def create_model_info(model_data, slug, capabilities)
           model_id = model_data['modelId']
-
-          case model_id
-          when /claude-3-opus/, /claude-3-sonnet/, /claude-3-haiku/ then 200_000
-          when /claude-3-5/, /claude-3-7/ then 200_000
-          when /claude-sonnet-4/, /claude-opus-4/, /claude-haiku-4/ then 200_000
-          when /nova/ then 300_000
-          when /llama-3/ then 128_000
-          when /deepseek/ then 64_000
-          when /qwen/ then 32_000
-          when /mistral/, /pixtral/ then 128_000
-          when /gpt-oss/ then 128_000
-          else 128_000
-          end
-        end
-
-        def extract_max_output_tokens(model_data)
-          model_id = model_data['modelId']
-
-          case model_id
-          when /claude/ then 4_096
-          when /nova/ then 5_000
-          when /llama/ then 4_096
-          when /deepseek/ then 8_192
-          when /qwen/ then 8_192
-          when /mistral/, /pixtral/ then 8_192
-          when /gpt-oss/ then 4_096
-          else 4_096
-          end
-        end
-
-        def extract_modalities(model_data)
-          input_modalities = (model_data['inputModalities'] || ['TEXT']).map(&:downcase)
-          output_modalities = (model_data['outputModalities'] || ['TEXT']).map(&:downcase)
-
-          {
-            input: input_modalities,
-            output: output_modalities
-          }
-        end
-
-        def extract_capabilities(model_data)
-          capabilities = []
-
-          capabilities << 'streaming' if model_data['responseStreamingSupported']
-
-          model_id = model_data['modelId']
-
-          # Add function calling for models that support it
-          capabilities << 'function_calling' if model_id.match?(/claude|nova|llama-3|qwen/)
-
-          # Add vision capability if images are supported
-          capabilities << 'vision' if (model_data['inputModalities'] || []).include?('IMAGE')
-
-          # Add audio capability if audio is supported
-          capabilities << 'audio' if (model_data['inputModalities'] || []).include?('AUDIO')
-
-          # Add video capability if video is supported
-          capabilities << 'video' if (model_data['inputModalities'] || []).include?('VIDEO')
-
-          capabilities
-        end
-
-        def create_model_info(model_data, slug, _capabilities)
-          model_id = model_data['modelId']
+          final_model_id = model_id_with_region(model_id, model_data)
 
           Model::Info.new(
-            id: model_id_with_region(model_id, model_data),
-            name: model_data['modelName'] || model_id,
+            id: final_model_id,
+            name: model_data['modelName'] || capabilities.format_display_name(model_id),
             provider: slug,
-            family: 'claude',
+            family: capabilities.model_family(final_model_id),
             created_at: nil,
-            context_window: 200_000,
-            max_output_tokens: 4096,
-            modalities: { input: ['text'], output: ['text'] },
-            capabilities: [],
-            pricing: {},
+            context_window: capabilities.context_window_for(final_model_id),
+            max_output_tokens: capabilities.max_tokens_for(final_model_id),
+            modalities: capabilities.modalities_for(final_model_id),
+            capabilities: capabilities.capabilities_for(final_model_id),
+            pricing: capabilities.pricing_for(final_model_id),
             metadata: {}
           )
         end
