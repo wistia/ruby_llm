@@ -83,8 +83,6 @@ RSpec.describe RubyLLM::Chat do
 
   describe 'change model on the fly' do
     CHAT_MODELS.first(3).combination(2).each do |first, second|
-      next if first[:provider] == :bedrock || second[:provider] == :bedrock # Bedrock has dedicated specs in spec/ruby_llm/providers/bedrock/
-
       it "between #{first[:provider]}/#{first[:model]} and #{second[:provider]}/#{second[:model]}" do
         chat = RubyLLM.chat(model: first[:model], provider: first[:provider])
         response = chat.ask("What's 2 + 2?")
