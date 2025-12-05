@@ -33,6 +33,8 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
+      next if provider == :bedrock # Bedrock has dedicated specs in spec/ruby_llm/providers/bedrock/
+
       context "with #{provider}/#{model}" do
         let(:chat) { RubyLLM.chat(model: model, provider: provider) }
 
@@ -68,6 +70,8 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
+      next if provider == :bedrock # Bedrock has dedicated specs in spec/ruby_llm/providers/bedrock/
+
       context "#{provider}/#{model}" do # rubocop:disable RSpec/ContextWording
         let(:chat) { RubyLLM.chat(model: model, provider: provider) }
 

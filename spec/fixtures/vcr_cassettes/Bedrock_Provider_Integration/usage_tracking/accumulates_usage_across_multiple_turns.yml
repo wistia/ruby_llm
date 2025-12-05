@@ -1,0 +1,49 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.us-west-2.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"Hello"}]}],"inferenceConfig":{"maxTokens":4096}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Host:
+      - bedrock-runtime.us-west-2.amazonaws.com
+      X-Amz-Date:
+      - 20251205T045030Z
+      X-Amz-Security-Token:
+      - "<AWS_SESSION_TOKEN>"
+      X-Amz-Content-Sha256:
+      - d1cf7185e440d1fae727167b51623196a394e1fde551a456e72f6d576b5b5182
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20251205/us-west-2/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=ae6b564688350cac85c1ae8e534f901a2aa170ef78d5fafa414829b8100b9e7d
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 05 Dec 2025 04:50:32 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '490'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - afdb3c2d-f30b-45a0-b674-20285336746b
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6OTg5fSwib3V0cHV0Ijp7Im1lc3NhZ2UiOnsiY29udGVudCI6W3sidGV4dCI6IiMgSGVsbG8hIPCfkYtcblxuSG93IGNhbiBJIGhlbHAgeW91IHRvZGF5PyBGZWVsIGZyZWUgdG8gYXNrIG1lIGFueXRoaW5n4oCUd2hldGhlciBpdCdzIHF1ZXN0aW9ucyBhYm91dCBhIHRvcGljLCB3cml0aW5nIGhlbHAsIGNvZGluZywgYnJhaW5zdG9ybWluZywgb3IganVzdCBoYXZpbmcgYSBjb252ZXJzYXRpb24uIn1dLCJyb2xlIjoiYXNzaXN0YW50In19LCJzdG9wUmVhc29uIjoiZW5kX3R1cm4iLCJ1c2FnZSI6eyJjYWNoZVJlYWRJbnB1dFRva2VuQ291bnQiOjAsImNhY2hlUmVhZElucHV0VG9rZW5zIjowLCJjYWNoZVdyaXRlSW5wdXRUb2tlbkNvdW50IjowLCJjYWNoZVdyaXRlSW5wdXRUb2tlbnMiOjAsImlucHV0VG9rZW5zIjo4LCJvdXRwdXRUb2tlbnMiOjQ4LCJzZXJ2ZXJUb29sVXNhZ2UiOnt9LCJ0b3RhbFRva2VucyI6NTZ9fQ==
+  recorded_at: Fri, 05 Dec 2025 04:50:32 GMT
+recorded_with: VCR 6.3.1

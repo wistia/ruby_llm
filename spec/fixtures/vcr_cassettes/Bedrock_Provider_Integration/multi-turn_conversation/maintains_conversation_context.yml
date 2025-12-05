@@ -1,0 +1,104 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.us-west-2.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"My favorite number
+        is 42."}]}],"inferenceConfig":{"maxTokens":4096}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Host:
+      - bedrock-runtime.us-west-2.amazonaws.com
+      X-Amz-Date:
+      - 20251205T045005Z
+      X-Amz-Security-Token:
+      - "<AWS_SESSION_TOKEN>"
+      X-Amz-Content-Sha256:
+      - 0c270a578c4f892d86b683e8cfb34c534c21f0c1c6aac0b4e2a8111632c6d83a
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20251205/us-west-2/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=c49b6d9c2bff314cd5585d77745a5727cef18838dc28d21af34f4e3c57e8767c
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 05 Dec 2025 04:50:07 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '796'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 5979bce5-5656-426c-bf7b-891a226bd08d
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6MTg5Nn0sIm91dHB1dCI6eyJtZXNzYWdlIjp7ImNvbnRlbnQiOlt7InRleHQiOiJUaGF0J3MgYSBncmVhdCBjaG9pY2UhIDQyIGhhcyBzb21lIGZ1biBhc3NvY2lhdGlvbnM6XG5cbi0gKipUaGUgSGl0Y2hoaWtlcidzIEd1aWRlIHRvIHRoZSBHYWxheHkqKiDigJQgaXQncyBmYW1vdXNseSBcInRoZSBBbnN3ZXIgdG8gdGhlIFVsdGltYXRlIFF1ZXN0aW9uIG9mIExpZmUsIHRoZSBVbml2ZXJzZSwgYW5kIEV2ZXJ5dGhpbmdcIlxuLSAqKk1hdGhlbWF0aWNzKiog4oCUIGl0IGFwcGVhcnMgaW4gdmFyaW91cyBpbnRlcmVzdGluZyBjb250ZXh0cywgbGlrZSB0aGUgc3VtIG9mIHRoZSBmaXJzdCB0aHJlZSBvZGQgcG93ZXJzIG9mIDJcbi0gKipDdWx0dXJlKiog4oCUIGl0J3MgYmVjb21lIGEgYml0IG9mIGFuIGluc2lkZSBqb2tlIGluIHRlY2ggYW5kIHNjaS1maSBjb21tdW5pdGllc1xuXG5EbyB5b3UgbGlrZSBpdCBiZWNhdXNlIG9mIHRoZSBIaXRjaGhpa2VyJ3MgR3VpZGUgcmVmZXJlbmNlLCBvciBmb3IgYW5vdGhlciByZWFzb24/In1dLCJyb2xlIjoiYXNzaXN0YW50In19LCJzdG9wUmVhc29uIjoiZW5kX3R1cm4iLCJ1c2FnZSI6eyJjYWNoZVJlYWRJbnB1dFRva2VuQ291bnQiOjAsImNhY2hlUmVhZElucHV0VG9rZW5zIjowLCJjYWNoZVdyaXRlSW5wdXRUb2tlbkNvdW50IjowLCJjYWNoZVdyaXRlSW5wdXRUb2tlbnMiOjAsImlucHV0VG9rZW5zIjoxNCwib3V0cHV0VG9rZW5zIjoxMjAsInNlcnZlclRvb2xVc2FnZSI6e30sInRvdGFsVG9rZW5zIjoxMzR9fQ==
+  recorded_at: Fri, 05 Dec 2025 04:50:07 GMT
+- request:
+    method: post
+    uri: https://bedrock-runtime.us-west-2.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"My favorite number
+        is 42."}]},{"role":"assistant","content":[{"text":"That''s a great choice!
+        42 has some fun associations:\n\n- **The Hitchhiker''s Guide to the Galaxy**
+        — it''s famously \"the Answer to the Ultimate Question of Life, the Universe,
+        and Everything\"\n- **Mathematics** — it appears in various interesting contexts,
+        like the sum of the first three odd powers of 2\n- **Culture** — it''s become
+        a bit of an inside joke in tech and sci-fi communities\n\nDo you like it because
+        of the Hitchhiker''s Guide reference, or for another reason?"}]},{"role":"user","content":[{"text":"What
+        is my favorite number?"}]}],"inferenceConfig":{"maxTokens":4096}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Host:
+      - bedrock-runtime.us-west-2.amazonaws.com
+      X-Amz-Date:
+      - 20251205T045007Z
+      X-Amz-Security-Token:
+      - "<AWS_SESSION_TOKEN>"
+      X-Amz-Content-Sha256:
+      - c67d2fd7f7a2d796d08187e045a9bbbf49d135d4cb28a29689a0d3125745a4f5
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20251205/us-west-2/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=d5cf0d5c4ed0b7700805b92ed1c861149dd7614c55012c31a49ddbb3df402a00
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 05 Dec 2025 04:50:09 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '392'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - cd8d610f-98aa-4449-9942-c1da009806f0
+    body:
+      encoding: UTF-8
+      string: '{"metrics":{"latencyMs":816},"output":{"message":{"content":[{"text":"Your
+        favorite number is 42! You told me that at the start of our conversation."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":143,"outputTokens":21,"serverToolUsage":{},"totalTokens":164}}'
+  recorded_at: Fri, 05 Dec 2025 04:50:09 GMT
+recorded_with: VCR 6.3.1

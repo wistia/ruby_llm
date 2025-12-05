@@ -1,0 +1,98 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.us-west-2.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"Hello!"}]}],"inferenceConfig":{"maxTokens":4096}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Host:
+      - bedrock-runtime.us-west-2.amazonaws.com
+      X-Amz-Date:
+      - 20251205T045009Z
+      X-Amz-Security-Token:
+      - "<AWS_SESSION_TOKEN>"
+      X-Amz-Content-Sha256:
+      - 66d84e0afcadd56a0f58fec2d849e08ed35d0af9cc181d38779e6f0461b3e7db
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20251205/us-west-2/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=fd339240082b9aa3bac63ab2bcfb9db0f3efe7f41646c400a426e41dbb814af0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 05 Dec 2025 04:50:10 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '348'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 8ed8186b-3a28-4a45-8871-d7721c655db4
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6NjYxfSwib3V0cHV0Ijp7Im1lc3NhZ2UiOnsiY29udGVudCI6W3sidGV4dCI6IkhlbGxvISDwn5GLIEhvdyBjYW4gSSBoZWxwIHlvdSB0b2RheT8ifV0sInJvbGUiOiJhc3Npc3RhbnQifX0sInN0b3BSZWFzb24iOiJlbmRfdHVybiIsInVzYWdlIjp7ImNhY2hlUmVhZElucHV0VG9rZW5Db3VudCI6MCwiY2FjaGVSZWFkSW5wdXRUb2tlbnMiOjAsImNhY2hlV3JpdGVJbnB1dFRva2VuQ291bnQiOjAsImNhY2hlV3JpdGVJbnB1dFRva2VucyI6MCwiaW5wdXRUb2tlbnMiOjksIm91dHB1dFRva2VucyI6MTYsInNlcnZlclRvb2xVc2FnZSI6e30sInRvdGFsVG9rZW5zIjoyNX19
+  recorded_at: Fri, 05 Dec 2025 04:50:10 GMT
+- request:
+    method: post
+    uri: https://bedrock-runtime.us-west-2.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: "{\"messages\":[{\"role\":\"user\",\"content\":[{\"text\":\"Hello!\"}]},{\"role\":\"assistant\",\"content\":[{\"text\":\"Hello!
+        \U0001F44B How can I help you today?\"}]},{\"role\":\"user\",\"content\":[{\"text\":\"How
+        are you?\"}]}],\"inferenceConfig\":{\"maxTokens\":4096}}"
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Host:
+      - bedrock-runtime.us-west-2.amazonaws.com
+      X-Amz-Date:
+      - 20251205T045010Z
+      X-Amz-Security-Token:
+      - "<AWS_SESSION_TOKEN>"
+      X-Amz-Content-Sha256:
+      - 0117f2d8d505b3f5ffc11f804790de0bd28f2cc354ff3a1cb370ea4a951d59da
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20251205/us-west-2/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=3b2e67931d610d20b7c12267387ed4827dc9639515f67b253fc72d5884c94f0d
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 05 Dec 2025 04:50:12 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '419'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - e791127b-c76d-460c-9319-4cd3deed96db
+    body:
+      encoding: UTF-8
+      string: '{"metrics":{"latencyMs":902},"output":{"message":{"content":[{"text":"I''m
+        doing well, thank you for asking! I''m here and ready to help with whatever
+        you need. How are you doing?"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":32,"outputTokens":30,"serverToolUsage":{},"totalTokens":62}}'
+  recorded_at: Fri, 05 Dec 2025 04:50:12 GMT
+recorded_with: VCR 6.3.1

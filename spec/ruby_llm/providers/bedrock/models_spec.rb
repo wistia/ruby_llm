@@ -7,6 +7,11 @@ RSpec.describe RubyLLM::Providers::Bedrock::Models do
   let(:capabilities) { class_double(RubyLLM::Providers::Bedrock::Capabilities) }
 
   before do
+    # Mock Bedrock configuration to avoid requiring real AWS credentials
+    allow(RubyLLM.config).to receive(:bedrock_api_key).and_return('fake-access-key')
+    allow(RubyLLM.config).to receive(:bedrock_secret_key).and_return('fake-secret-key')
+    allow(RubyLLM.config).to receive(:bedrock_region).and_return('us-east-1')
+
     allow(capabilities).to receive_messages(
       context_window_for: 4096,
       max_tokens_for: 4096,
@@ -17,7 +22,10 @@ RSpec.describe RubyLLM::Providers::Bedrock::Models do
       supports_json_mode?: false,
       input_price_for: 0.0,
       output_price_for: 0.0,
-      format_display_name: 'Test Model'
+      format_display_name: 'Test Model',
+      modalities_for: { input: ['text'], output: ['text'] },
+      capabilities_for: [],
+      pricing_for: { text_tokens: { standard: { input_per_million: 0.0, output_per_million: 0.0 } } }
     )
   end
 
@@ -37,8 +45,6 @@ RSpec.describe RubyLLM::Providers::Bedrock::Models do
       end
 
       it 'adds us. prefix to model ID' do
-        # Mock a provider instance to test the region functionality
-        allow(RubyLLM.config).to receive(:bedrock_region).and_return('us-east-1')
         provider = RubyLLM::Providers::Bedrock.new(RubyLLM.config)
         provider.extend(described_class)
 
@@ -62,8 +68,6 @@ RSpec.describe RubyLLM::Providers::Bedrock::Models do
       end
 
       it 'does not add us. prefix to model ID' do
-        # Mock a provider instance to test the region functionality
-        allow(RubyLLM.config).to receive(:bedrock_region).and_return('us-east-1')
         provider = RubyLLM::Providers::Bedrock.new(RubyLLM.config)
         provider.extend(described_class)
 
@@ -87,8 +91,6 @@ RSpec.describe RubyLLM::Providers::Bedrock::Models do
       end
 
       it 'does not add us. prefix to model ID' do
-        # Mock a provider instance to test the region functionality
-        allow(RubyLLM.config).to receive(:bedrock_region).and_return('us-east-1')
         provider = RubyLLM::Providers::Bedrock.new(RubyLLM.config)
         provider.extend(described_class)
 
@@ -111,8 +113,6 @@ RSpec.describe RubyLLM::Providers::Bedrock::Models do
       end
 
       it 'does not add us. prefix to model ID' do
-        # Mock a provider instance to test the region functionality
-        allow(RubyLLM.config).to receive(:bedrock_region).and_return('us-east-1')
         provider = RubyLLM::Providers::Bedrock.new(RubyLLM.config)
         provider.extend(described_class)
 
@@ -125,13 +125,16 @@ RSpec.describe RubyLLM::Providers::Bedrock::Models do
   # New specs for region-aware inference profile handling
   describe '#model_id_with_region with region awareness' do
     let(:provider_instance) do
-      allow(RubyLLM.config).to receive(:bedrock_region).and_return('eu-west-3')
       provider = RubyLLM::Providers::Bedrock.new(RubyLLM.config)
       provider.extend(described_class)
       provider
     end
 
     context 'with EU region configured' do
+      before do
+        allow(RubyLLM.config).to receive(:bedrock_region).and_return('eu-west-3')
+      end
+
       let(:inference_profile_model) do
         {
           'modelId' => 'anthropic.claude-3-7-sonnet-20250219-v1:0',
@@ -162,8 +165,11 @@ RSpec.describe RubyLLM::Providers::Bedrock::Models do
     end
 
     context 'with AP region configured' do
-      let(:provider_instance) do
+      before do
         allow(RubyLLM.config).to receive(:bedrock_region).and_return('ap-south-1')
+      end
+
+      let(:provider_instance) do
         provider = RubyLLM::Providers::Bedrock.new(RubyLLM.config)
         provider.extend(described_class)
         provider

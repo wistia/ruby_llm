@@ -1,0 +1,49 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.us-west-2.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"What color is the sky
+        on a clear day? One word answer."}]}],"inferenceConfig":{"maxTokens":4096}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Host:
+      - bedrock-runtime.us-west-2.amazonaws.com
+      X-Amz-Date:
+      - 20251205T045003Z
+      X-Amz-Security-Token:
+      - "<AWS_SESSION_TOKEN>"
+      X-Amz-Content-Sha256:
+      - b032ed58d27b21040540f26e23868862344eb72dc20bbf71c395225b6f82256a
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20251205/us-west-2/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=1c4eb25345f90d09ac3aa0b36eb4f0cd86fb8a1cc73870b674fdf1ab20cbe38d
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 05 Dec 2025 04:50:05 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '316'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 29fc2645-adca-46b6-ba06-76a5e6ed0a79
+    body:
+      encoding: UTF-8
+      string: '{"metrics":{"latencyMs":686},"output":{"message":{"content":[{"text":"Blue."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":21,"outputTokens":5,"serverToolUsage":{},"totalTokens":26}}'
+  recorded_at: Fri, 05 Dec 2025 04:50:05 GMT
+recorded_with: VCR 6.3.1

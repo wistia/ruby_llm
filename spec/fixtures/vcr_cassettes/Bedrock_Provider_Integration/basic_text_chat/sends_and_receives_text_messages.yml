@@ -1,0 +1,49 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.us-west-2.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"What is 2 + 2? Answer
+        with just the number."}]}],"inferenceConfig":{"maxTokens":4096}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Host:
+      - bedrock-runtime.us-west-2.amazonaws.com
+      X-Amz-Date:
+      - 20251205T044946Z
+      X-Amz-Security-Token:
+      - "<AWS_SESSION_TOKEN>"
+      X-Amz-Content-Sha256:
+      - 5d2fce00fc0e267214f2a77eb85b1442c0b546446d867d9a795607967cd6a665
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20251205/us-west-2/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=9aa922c1c481febc36d85b7ff9c4cf3972af3b1643c2f044eb3d08bef43415a2
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 05 Dec 2025 04:49:47 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '312'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - c9d1742d-5ae4-4f61-806f-2bfc3a377ea6
+    body:
+      encoding: UTF-8
+      string: '{"metrics":{"latencyMs":815},"output":{"message":{"content":[{"text":"4"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":22,"outputTokens":5,"serverToolUsage":{},"totalTokens":27}}'
+  recorded_at: Fri, 05 Dec 2025 04:49:47 GMT
+recorded_with: VCR 6.3.1

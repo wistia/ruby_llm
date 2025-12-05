@@ -1,0 +1,50 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.us-west-2.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"Tell me about the moon."}]}],"inferenceConfig":{"maxTokens":4096},"system":[{"text":"You
+        are a helpful assistant that always responds in haiku format (5-7-5 syllables)."}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Host:
+      - bedrock-runtime.us-west-2.amazonaws.com
+      X-Amz-Date:
+      - 20251205T045012Z
+      X-Amz-Security-Token:
+      - "<AWS_SESSION_TOKEN>"
+      X-Amz-Content-Sha256:
+      - b46071bab444a8775195a0878c8a4a08a674dff3d41301f44905559ea5667642
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20251205/us-west-2/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=9f539b613d7233518d2626e52681fe2575f6fb8ee33b051ca99a3c129b3bebdc
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 05 Dec 2025 04:50:14 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '392'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - db0ff29e-4cec-45ab-a203-9dea7c2e2685
+    body:
+      encoding: UTF-8
+      string: '{"metrics":{"latencyMs":1026},"output":{"message":{"content":[{"text":"Silver
+        orb glows bright\nPulling tides across the seas\nNight''s gentle guardian"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":35,"outputTokens":22,"serverToolUsage":{},"totalTokens":57}}'
+  recorded_at: Fri, 05 Dec 2025 04:50:14 GMT
+recorded_with: VCR 6.3.1

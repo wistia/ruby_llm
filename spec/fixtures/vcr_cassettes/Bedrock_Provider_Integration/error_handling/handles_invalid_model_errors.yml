@@ -1,0 +1,50 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.us-west-2.amazonaws.com/model/invalid-model-name-12345/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"Hello"}]}],"inferenceConfig":{"maxTokens":4096}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Host:
+      - bedrock-runtime.us-west-2.amazonaws.com
+      X-Amz-Date:
+      - 20251205T045225Z
+      X-Amz-Security-Token:
+      - "<AWS_SESSION_TOKEN>"
+      X-Amz-Content-Sha256:
+      - d1cf7185e440d1fae727167b51623196a394e1fde551a456e72f6d576b5b5182
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20251205/us-west-2/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=f2dc96c1256a920ae7e3ca161f6bcb3bf6cb853d624774466e73e2837313b8ad
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Date:
+      - Fri, 05 Dec 2025 04:52:26 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '55'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 21ca89c4-6542-406e-99f4-2a5ebf378b01
+      X-Amzn-Errortype:
+      - ValidationException:http://internal.amazon.com/coral/com.amazon.bedrock/
+    body:
+      encoding: UTF-8
+      string: '{"message":"The provided model identifier is invalid."}'
+  recorded_at: Fri, 05 Dec 2025 04:52:26 GMT
+recorded_with: VCR 6.3.1

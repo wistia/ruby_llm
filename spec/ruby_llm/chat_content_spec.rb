@@ -25,6 +25,8 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
+      next if provider == :bedrock # Bedrock has dedicated specs in spec/ruby_llm/providers/bedrock/
+
       it "#{provider}/#{model} can understand text" do
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask("What's in this file?", with: text_path)
@@ -61,6 +63,8 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
     VISION_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
+      next if provider == :bedrock # Bedrock has dedicated specs in spec/ruby_llm/providers/bedrock/
+
       it "#{provider}/#{model} can understand local images" do
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask('What do you see in this image?', with: { image: image_path })
@@ -160,6 +164,8 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
     PDF_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
+      next if provider == :bedrock # Bedrock has dedicated specs in spec/ruby_llm/providers/bedrock/
+
       it "#{provider}/#{model} understands PDFs" do
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask('Summarize this document', with: { pdf: pdf_path })

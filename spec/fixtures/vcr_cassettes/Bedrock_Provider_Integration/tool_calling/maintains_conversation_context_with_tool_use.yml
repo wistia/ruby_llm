@@ -1,0 +1,154 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.us-west-2.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"What''s the weather
+        at 42.3601, -71.0589?"}]}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"test_weather","description":"Gets
+        current weather for a location","inputSchema":{"json":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        coordinate"},"longitude":{"type":"string","description":"Longitude coordinate"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}}]}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Host:
+      - bedrock-runtime.us-west-2.amazonaws.com
+      X-Amz-Date:
+      - 20251205T045019Z
+      X-Amz-Security-Token:
+      - "<AWS_SESSION_TOKEN>"
+      X-Amz-Content-Sha256:
+      - b3ad5d9495fe7ed89423bc60a58f999f7b6beef65fd16c3bc43132ae48aa45f7
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20251205/us-west-2/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=45b1b9b2f7787b4d0065a91f4143d952f908bf9de92b92728d61c7fae4f31933
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 05 Dec 2025 04:50:21 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '455'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - f421b305-e901-4363-b332-1b5e6ef36fca
+    body:
+      encoding: UTF-8
+      string: '{"metrics":{"latencyMs":858},"output":{"message":{"content":[{"toolUse":{"input":{"latitude":"42.3601","longitude":"-71.0589"},"name":"test_weather","toolUseId":"tooluse_1kiSvkKuTM2SmQJ8_vOhuw","type":"tool_use"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":615,"outputTokens":78,"serverToolUsage":{},"totalTokens":693}}'
+  recorded_at: Fri, 05 Dec 2025 04:50:21 GMT
+- request:
+    method: post
+    uri: https://bedrock-runtime.us-west-2.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"What''s the weather
+        at 42.3601, -71.0589?"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_1kiSvkKuTM2SmQJ8_vOhuw","name":"test_weather","input":{"latitude":"42.3601","longitude":"-71.0589"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_1kiSvkKuTM2SmQJ8_vOhuw","content":[{"text":"Weather
+        at 42.3601, -71.0589: 72°F, sunny"}]}}]}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"test_weather","description":"Gets
+        current weather for a location","inputSchema":{"json":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        coordinate"},"longitude":{"type":"string","description":"Longitude coordinate"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}}]}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Host:
+      - bedrock-runtime.us-west-2.amazonaws.com
+      X-Amz-Date:
+      - 20251205T045021Z
+      X-Amz-Security-Token:
+      - "<AWS_SESSION_TOKEN>"
+      X-Amz-Content-Sha256:
+      - 066dbeee07123df6ca01aa6665d2076b3a9b2ca06c8f1e7d6e08ee14b903d0a8
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20251205/us-west-2/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=6898d93a32d6bc3e69ec35e75a297981c05600a769e0e8b6a3e6edddc9c63fa7
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 05 Dec 2025 04:50:23 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '482'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 1a98b9bf-bd1e-4eab-99c9-4253852da548
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6MTEzOH0sIm91dHB1dCI6eyJtZXNzYWdlIjp7ImNvbnRlbnQiOlt7InRleHQiOiJUaGUgd2VhdGhlciBhdCBjb29yZGluYXRlcyA0Mi4zNjAxLCAtNzEuMDU4OSAoQm9zdG9uLCBNYXNzYWNodXNldHRzKSBpczpcblxuLSAqKlRlbXBlcmF0dXJlOioqIDcywrBGXG4tICoqQ29uZGl0aW9uczoqKiBTdW5ueVxuXG5JdCdzIGEgcGxlYXNhbnQgZGF5IHdpdGggbmljZSB3ZWF0aGVyISJ9XSwicm9sZSI6ImFzc2lzdGFudCJ9fSwic3RvcFJlYXNvbiI6ImVuZF90dXJuIiwidXNhZ2UiOnsiY2FjaGVSZWFkSW5wdXRUb2tlbkNvdW50IjowLCJjYWNoZVJlYWRJbnB1dFRva2VucyI6MCwiY2FjaGVXcml0ZUlucHV0VG9rZW5Db3VudCI6MCwiY2FjaGVXcml0ZUlucHV0VG9rZW5zIjowLCJpbnB1dFRva2VucyI6NzI1LCJvdXRwdXRUb2tlbnMiOjUzLCJzZXJ2ZXJUb29sVXNhZ2UiOnt9LCJ0b3RhbFRva2VucyI6Nzc4fX0=
+  recorded_at: Fri, 05 Dec 2025 04:50:23 GMT
+- request:
+    method: post
+    uri: https://bedrock-runtime.us-west-2.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"What''s the weather
+        at 42.3601, -71.0589?"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_1kiSvkKuTM2SmQJ8_vOhuw","name":"test_weather","input":{"latitude":"42.3601","longitude":"-71.0589"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_1kiSvkKuTM2SmQJ8_vOhuw","content":[{"text":"Weather
+        at 42.3601, -71.0589: 72°F, sunny"}]}}]},{"role":"assistant","content":[{"text":"The
+        weather at coordinates 42.3601, -71.0589 (Boston, Massachusetts) is:\n\n-
+        **Temperature:** 72°F\n- **Conditions:** Sunny\n\nIt''s a pleasant day with
+        nice weather!"}]},{"role":"user","content":[{"text":"Is it nice out?"}]}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"test_weather","description":"Gets
+        current weather for a location","inputSchema":{"json":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        coordinate"},"longitude":{"type":"string","description":"Longitude coordinate"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}}]}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Host:
+      - bedrock-runtime.us-west-2.amazonaws.com
+      X-Amz-Date:
+      - 20251205T045023Z
+      X-Amz-Security-Token:
+      - "<AWS_SESSION_TOKEN>"
+      X-Amz-Content-Sha256:
+      - 632b2a379945e3dee3d94df50cfa724e27ced444cfb9576042da4d0b64477d06
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20251205/us-west-2/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=ee53ac92b490b4d7d2f616723d3aa0f891f0efd53cbb9099133e0c18e5d3fc1a
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 05 Dec 2025 04:50:25 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '527'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 63ea79de-b6c5-4000-9d34-a4ce31bd9257
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6MTI5OH0sIm91dHB1dCI6eyJtZXNzYWdlIjp7ImNvbnRlbnQiOlt7InRleHQiOiJZZXMsIGl0J3MgbmljZSBvdXQhIEJhc2VkIG9uIHRoZSB3ZWF0aGVyIGRhdGEgSSBqdXN0IHJldHJpZXZlZCBmb3IgdGhhdCBsb2NhdGlvbiwgaXQncyA3MsKwRiBhbmQgc3VubnksIHdoaWNoIGFyZSBpZGVhbCBjb25kaXRpb25zLiBUaGF0J3MgY29tZm9ydGFibGUgdGVtcGVyYXR1cmUgYW5kIGNsZWFyIHNraWVzIC0gcGVyZmVjdCBmb3Igb3V0ZG9vciBhY3Rpdml0aWVzISJ9XSwicm9sZSI6ImFzc2lzdGFudCJ9fSwic3RvcFJlYXNvbiI6ImVuZF90dXJuIiwidXNhZ2UiOnsiY2FjaGVSZWFkSW5wdXRUb2tlbkNvdW50IjowLCJjYWNoZVJlYWRJbnB1dFRva2VucyI6MCwiY2FjaGVXcml0ZUlucHV0VG9rZW5Db3VudCI6MCwiY2FjaGVXcml0ZUlucHV0VG9rZW5zIjowLCJpbnB1dFRva2VucyI6Nzg2LCJvdXRwdXRUb2tlbnMiOjUwLCJzZXJ2ZXJUb29sVXNhZ2UiOnt9LCJ0b3RhbFRva2VucyI6ODM2fX0=
+  recorded_at: Fri, 05 Dec 2025 04:50:25 GMT
+recorded_with: VCR 6.3.1

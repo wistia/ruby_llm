@@ -10,6 +10,8 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
+      next if provider == :bedrock # Bedrock has dedicated specs in spec/ruby_llm/providers/bedrock/
+
       it "#{provider}/#{model} supports streaming responses" do
         chat = RubyLLM.chat(model: model, provider: provider)
         chunks = []
@@ -50,6 +52,7 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
+      next if provider == :bedrock # Bedrock has dedicated specs in spec/ruby_llm/providers/bedrock/
 
       context "with #{provider}/#{model}" do
         let(:chat) { RubyLLM.chat(model: model, provider: provider) }
