@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://bedrock-runtime.us-west-2.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"What do you see in
@@ -11,7 +11,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.0
       Host:
-      - bedrock-runtime.us-west-2.amazonaws.com
+      - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
       - 20251205T064321Z
       X-Amz-Security-Token:
@@ -19,7 +19,7 @@ http_interactions:
       X-Amz-Content-Sha256:
       - d745b75a6a39a11262f6278959bf231ee4c58318a18ba26d4ab394c3937a619f
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20251205/us-west-2/bedrock/aws4_request,
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20251205/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=f9c3e1c2923fc6ceb1d5f63b874a9b97f9eb635ffa5298382171074565c85652
       Content-Type:
       - application/json

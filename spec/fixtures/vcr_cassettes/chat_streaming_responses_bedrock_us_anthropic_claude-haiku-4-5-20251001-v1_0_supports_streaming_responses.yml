@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://bedrock-runtime.us-west-2.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse-stream
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse-stream
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"Count from 1 to 3"}]}],"inferenceConfig":{"maxTokens":4096}}'
@@ -10,7 +10,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.0
       Host:
-      - bedrock-runtime.us-west-2.amazonaws.com
+      - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
       - 20251205T064435Z
       X-Amz-Security-Token:
@@ -18,7 +18,7 @@ http_interactions:
       X-Amz-Content-Sha256:
       - 1f3fed75827889a677cfbce7711918bdc98e03063cd8b80436a4066af234b562
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20251205/us-west-2/bedrock/aws4_request,
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20251205/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=d0591b1c3dd91fb201a0839664ac05ee79a70af0531dddda0870c7da94aa58d1
       Content-Type:
       - application/json

@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://bedrock-runtime.us-west-2.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"Tell me about the weather."}]}],"inferenceConfig":{"maxTokens":4096,"temperature":0.0},"system":[{"text":"You
@@ -11,7 +11,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.0
       Host:
-      - bedrock-runtime.us-west-2.amazonaws.com
+      - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
       - 20251205T064302Z
       X-Amz-Security-Token:
@@ -19,7 +19,7 @@ http_interactions:
       X-Amz-Content-Sha256:
       - ac3ab5ce5c961e69345fa8cdbf04349979b76f5fc8c696d9a29aa949361b548c
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20251205/us-west-2/bedrock/aws4_request,
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20251205/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=119cf39e7a5b1fefdd709e8818b981265159f85850c7dfd4fbcdcae8b3ccd94a
       Content-Type:
       - application/json
@@ -64,7 +64,7 @@ http_interactions:
   recorded_at: Fri, 05 Dec 2025 06:43:06 GMT
 - request:
     method: post
-    uri: https://bedrock-runtime.us-west-2.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"Tell me about the weather."}]},{"role":"assistant","content":[{"text":"#
@@ -89,7 +89,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.0
       Host:
-      - bedrock-runtime.us-west-2.amazonaws.com
+      - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
       - 20251205T064306Z
       X-Amz-Security-Token:
@@ -97,7 +97,7 @@ http_interactions:
       X-Amz-Content-Sha256:
       - 0a7ce79410c5728b871be51fd226b5918eba1ac71de87cfa3ec484408dee4c2e
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20251205/us-west-2/bedrock/aws4_request,
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20251205/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=94677eda80bbedd63c4d4664d02d102086aa80dc32c39d898cfd9f4e8b404a93
       Content-Type:
       - application/json
