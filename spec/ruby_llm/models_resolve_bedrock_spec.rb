@@ -7,6 +7,12 @@ RSpec.describe RubyLLM::Models, '.resolve with Bedrock models' do
 
   let(:config) { RubyLLM.config }
 
+  # Ensure models are loaded from registry before running tests
+  before do
+    RubyLLM::Models.instance_variable_set(:@instance, nil)
+    RubyLLM::Models.instance.load_from_json!
+  end
+
   describe 'resolving Bedrock models' do
     context 'with fully qualified ARN-style model IDs' do
       let(:test_models) do
