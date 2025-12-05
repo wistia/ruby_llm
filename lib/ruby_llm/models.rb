@@ -46,80 +46,90 @@ module RubyLLM
         configured.flat_map(&:list_models)
       end
 
-      def resolve(model_id, provider: nil, assume_exists: false, config: nil) # rubocop:disable Metrics/PerceivedComplexity
+      def resolve(model_id, provider: nil, assume_exists: false, config: nil)
         config ||= RubyLLM.config
 
         # Parse provider/model format (e.g., "bedrock/global.amazon.nova-2-lite-v1:0")
-        provider_from_prefix = nil
-        if model_id.include?('/') && !provider
-          parts = model_id.split('/', 2)
-          provider_from_prefix = parts[0]
-          provider = parts[0]
-          model_id = parts[1]
-        end
+        provider = extract_provider_from_model_id(model_id, provider)
+        model_id = strip_provider_prefix(model_id) if model_id.include?('/')
 
-        provider_class = provider ? Provider.providers[provider.to_sym] : nil
-
-        if provider_class
-          temp_instance = provider_class.new(config)
-          assume_exists = true if temp_instance.local?
-        end
+        # Auto-enable assume_exists for local providers
+        assume_exists = true if provider && local_provider?(provider, config)
 
         if assume_exists
-          raise ArgumentError, 'Provider must be specified if assume_exists is true' unless provider
-
-          provider_class ||= raise(Error, "Unknown provider: #{provider.to_sym}")
-          provider_instance = provider_class.new(config)
-
-          model = if provider_instance.local?
-                    begin
-                      Models.find(model_id, provider)
-                    rescue ModelNotFoundError
-                      nil
-                    end
-                  end
-
-          model ||= Model::Info.default(model_id, provider_instance.slug)
+          resolve_with_assume_exists(model_id, provider, config)
         else
-          # If provider was specified via prefix (e.g., "bedrock/..."), try to find the model
-          # If not found, allow raw model ID for Bedrock
-          if provider_from_prefix
-            begin
-              model = Models.find(model_id, provider)
-            rescue ModelNotFoundError
-              # Allow raw model IDs for Bedrock when using provider prefix
-              if provider_from_prefix == 'bedrock'
-                provider_class = Provider.providers[:bedrock] || raise(Error, "Unknown provider: bedrock")
-                provider_instance = provider_class.new(config)
-                model = Model::Info.default(model_id, provider_instance.slug)
-                return [model, provider_instance]
-              else
-                raise
-              end
-            end
-          else
-            # Try to find the model, but allow Bedrock models to use fallback
-            begin
-              model = Models.find(model_id, provider)
-            rescue ModelNotFoundError
-              # Allow raw model IDs for Bedrock even when provider is specified separately
-              if provider.to_s == 'bedrock'
-                provider_class = Provider.providers[:bedrock] || raise(Error, "Unknown provider: bedrock")
-                provider_instance = provider_class.new(config)
-                model = Model::Info.default(model_id, provider_instance.slug)
-                return [model, provider_instance]
-              else
-                raise
-              end
-            end
-          end
-
-          provider_class = Provider.providers[model.provider.to_sym] || raise(Error,
-                                                                              "Unknown provider: #{model.provider}")
-          provider_instance = provider_class.new(config)
+          resolve_by_lookup(model_id, provider, config)
         end
+      end
+
+      private
+
+      def extract_provider_from_model_id(model_id, provider)
+        return provider if provider || !model_id.include?('/')
+
+        model_id.split('/', 2).first
+      end
+
+      def strip_provider_prefix(model_id)
+        model_id.split('/', 2).last
+      end
+
+      def local_provider?(provider, config)
+        provider_class = Provider.providers[provider.to_sym]
+        return false unless provider_class
+
+        provider_class.new(config).local?
+      end
+
+      def resolve_with_assume_exists(model_id, provider, config)
+        raise ArgumentError, 'Provider must be specified if assume_exists is true' unless provider
+
+        provider_instance = get_provider_instance(provider, config)
+
+        # Try to find model in registry for local providers
+        model = if provider_instance.local?
+                  begin
+                    Models.find(model_id, provider)
+                  rescue ModelNotFoundError
+                    nil
+                  end
+                end
+
+        # Fall back to default model info
+        model ||= Model::Info.default(model_id, provider_instance.slug)
+
         [model, provider_instance]
       end
+
+      def resolve_by_lookup(model_id, provider, config)
+        begin
+          model = Models.find(model_id, provider)
+        rescue ModelNotFoundError
+          # Allow raw model IDs for Bedrock (they use ARN-style IDs not in registry)
+          return create_bedrock_fallback(model_id, config) if provider.to_s == 'bedrock'
+
+          raise
+        end
+
+        provider_instance = get_provider_instance(model.provider, config)
+        [model, provider_instance]
+      end
+
+      def create_bedrock_fallback(model_id, config)
+        provider_instance = get_provider_instance('bedrock', config)
+        model = Model::Info.default(model_id, provider_instance.slug)
+        [model, provider_instance]
+      end
+
+      def get_provider_instance(provider, config)
+        provider_class = Provider.providers[provider.to_sym]
+        raise Error, "Unknown provider: #{provider}" unless provider_class
+
+        provider_class.new(config)
+      end
+
+      public
 
       def method_missing(method, ...)
         if instance.respond_to?(method)
