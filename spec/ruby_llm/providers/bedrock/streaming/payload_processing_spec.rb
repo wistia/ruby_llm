@@ -267,7 +267,7 @@ RSpec.describe RubyLLM::Providers::Bedrock::Streaming::PayloadProcessing do
 
     it 'builds chunk with tool call' do
       data = {
-        'delta' => {
+        'start' => {
           'toolUse' => {
             'toolUseId' => 'tool_123',
             'name' => 'get_weather'
@@ -338,7 +338,7 @@ RSpec.describe RubyLLM::Providers::Bedrock::Streaming::PayloadProcessing do
 
     it 'extracts tool calls when present' do
       data = {
-        'delta' => {
+        'start' => {
           'toolUse' => {
             'toolUseId' => 'tool_456',
             'name' => 'calculate'
@@ -380,9 +380,9 @@ RSpec.describe RubyLLM::Providers::Bedrock::Streaming::PayloadProcessing do
       expect(yielded.output_tokens).to eq(5)
     end
 
-    it 'processes tool use delta payload' do
+    it 'processes tool use start payload' do
       json_data = {
-        'delta' => {
+        'start' => {
           'toolUse' => {
             'toolUseId' => 'tool_weather_789',
             'name' => 'get_weather'

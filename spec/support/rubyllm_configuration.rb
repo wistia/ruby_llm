@@ -21,7 +21,7 @@ RSpec.shared_context 'with configured RubyLLM' do
 
       config.bedrock_api_key = ENV.fetch('AWS_ACCESS_KEY_ID', 'test')
       config.bedrock_secret_key = ENV.fetch('AWS_SECRET_ACCESS_KEY', 'test')
-      config.bedrock_region = 'us-west-2'
+      config.bedrock_region = ENV.fetch('AWS_REGION', 'us-west-2')
       config.bedrock_session_token = ENV.fetch('AWS_SESSION_TOKEN', nil)
 
       config.vertexai_project_id = ENV.fetch('GOOGLE_CLOUD_PROJECT', 'test-project')

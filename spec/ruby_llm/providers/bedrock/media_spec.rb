@@ -96,7 +96,8 @@ RSpec.describe RubyLLM::Providers::Bedrock::Media do
           RubyLLM::Attachment,
           type: :pdf,
           mime_type: 'application/pdf',
-          encoded: 'base64pdfdata'
+          encoded: 'base64pdfdata',
+          filename: 'document.pdf'
         )
         allow(content).to receive(:attachments).and_return([pdf_attachment])
 
@@ -136,9 +137,9 @@ RSpec.describe RubyLLM::Providers::Bedrock::Media do
     context 'with Content object containing multiple attachments of mixed types' do
       it 'formats all attachments in order' do
         content = RubyLLM::Content.new('Multiple attachments')
-        image = instance_double(RubyLLM::Attachment, type: :image, mime_type: 'image/jpeg', encoded: 'img1')
-        pdf = instance_double(RubyLLM::Attachment, type: :pdf, mime_type: 'application/pdf', encoded: 'pdf1')
-        text_file = instance_double(RubyLLM::Attachment, type: :text, mime_type: 'text/plain')
+        image = instance_double(RubyLLM::Attachment, type: :image, mime_type: 'image/jpeg', encoded: 'img1', filename: 'image.jpg')
+        pdf = instance_double(RubyLLM::Attachment, type: :pdf, mime_type: 'application/pdf', encoded: 'pdf1', filename: 'doc.pdf')
+        text_file = instance_double(RubyLLM::Attachment, type: :text, mime_type: 'text/plain', filename: 'file.txt')
         allow(content).to receive(:attachments).and_return([image, pdf, text_file])
         allow(RubyLLM::Providers::Anthropic::Media).to receive(:format_text_file)
           .with(text_file)
@@ -304,13 +305,15 @@ RSpec.describe RubyLLM::Providers::Bedrock::Media do
       pdf = instance_double(
         RubyLLM::Attachment,
         mime_type: 'application/pdf',
-        encoded: 'base64pdfcontent'
+        encoded: 'base64pdfcontent',
+        filename: 'document.pdf'
       )
 
       result = described_class.format_pdf(pdf)
 
       expect(result).to eq({
         type: 'document',
+        name: 'document.pdf',
         source: {
           type: 'base64',
           media_type: 'application/pdf',
@@ -323,7 +326,8 @@ RSpec.describe RubyLLM::Providers::Bedrock::Media do
       pdf = instance_double(
         RubyLLM::Attachment,
         mime_type: 'application/pdf',
-        encoded: ''
+        encoded: '',
+        filename: 'empty.pdf'
       )
 
       result = described_class.format_pdf(pdf)
@@ -336,7 +340,8 @@ RSpec.describe RubyLLM::Providers::Bedrock::Media do
       pdf = instance_double(
         RubyLLM::Attachment,
         mime_type: 'application/pdf',
-        encoded: large_pdf_data
+        encoded: large_pdf_data,
+        filename: 'large.pdf'
       )
 
       result = described_class.format_pdf(pdf)
@@ -349,7 +354,8 @@ RSpec.describe RubyLLM::Providers::Bedrock::Media do
       pdf = instance_double(
         RubyLLM::Attachment,
         mime_type: 'application/pdf',
-        encoded: 'data'
+        encoded: 'data',
+        filename: 'test.pdf'
       )
 
       result = described_class.format_pdf(pdf)
@@ -361,7 +367,8 @@ RSpec.describe RubyLLM::Providers::Bedrock::Media do
       pdf = instance_double(
         RubyLLM::Attachment,
         mime_type: 'application/pdf',
-        encoded: 'data'
+        encoded: 'data',
+        filename: 'test.pdf'
       )
 
       result = described_class.format_pdf(pdf)
@@ -373,7 +380,8 @@ RSpec.describe RubyLLM::Providers::Bedrock::Media do
       pdf = instance_double(
         RubyLLM::Attachment,
         mime_type: 'application/pdf',
-        encoded: 'data'
+        encoded: 'data',
+        filename: 'test.pdf'
       )
 
       result = described_class.format_pdf(pdf)

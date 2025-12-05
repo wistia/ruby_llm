@@ -148,9 +148,9 @@ RSpec.describe RubyLLM::Providers::Bedrock::Streaming::ContentExtraction do
   end
 
   describe '#extract_tool_calls' do
-    it 'extracts tool call from delta.toolUse' do
+    it 'extracts tool call from start.toolUse' do
       data = {
-        'delta' => {
+        'start' => {
           'toolUse' => {
             'toolUseId' => 'tool_abc123',
             'name' => 'get_weather'
@@ -164,7 +164,7 @@ RSpec.describe RubyLLM::Providers::Bedrock::Streaming::ContentExtraction do
       expect(result['tool_abc123']).to be_a(RubyLLM::ToolCall)
       expect(result['tool_abc123'].id).to eq('tool_abc123')
       expect(result['tool_abc123'].name).to eq('get_weather')
-      expect(result['tool_abc123'].arguments).to eq({})
+      expect(result['tool_abc123'].arguments).to eq('')
     end
 
     it 'returns nil when there is no delta' do
@@ -201,9 +201,9 @@ RSpec.describe RubyLLM::Providers::Bedrock::Streaming::ContentExtraction do
       expect(result).to be_nil
     end
 
-    it 'creates ToolCall with empty arguments hash' do
+    it 'creates ToolCall with empty arguments string for start block' do
       data = {
-        'delta' => {
+        'start' => {
           'toolUse' => {
             'toolUseId' => 'tool_456',
             'name' => 'calculate'
@@ -213,7 +213,7 @@ RSpec.describe RubyLLM::Providers::Bedrock::Streaming::ContentExtraction do
 
       result = extractor.extract_tool_calls(data)
 
-      expect(result['tool_456'].arguments).to eq({})
+      expect(result['tool_456'].arguments).to eq('')
     end
   end
 
@@ -390,7 +390,7 @@ RSpec.describe RubyLLM::Providers::Bedrock::Streaming::ContentExtraction do
 
     it 'extracts tool call from tool use chunk' do
       data = {
-        'delta' => {
+        'start' => {
           'toolUse' => {
             'toolUseId' => 'tool_weather_123',
             'name' => 'get_weather'

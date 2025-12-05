@@ -129,7 +129,7 @@ RSpec.describe RubyLLM::Providers::Bedrock::Streaming::Base do
 
     it 'processes tool call message' do
       tool_data = {
-        'delta' => {
+        'start' => {
           'toolUse' => {
             'toolUseId' => 'tool_123',
             'name' => 'get_weather'

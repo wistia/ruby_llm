@@ -68,7 +68,8 @@ RSpec.describe RubyLLM::Providers::Bedrock::Chat do
         RubyLLM::Attachment,
         type: :pdf,
         mime_type: 'application/pdf',
-        encoded: 'pdfbase64data'
+        encoded: 'pdfbase64data',
+        filename: 'document.pdf'
       )
       allow(content).to receive(:attachments).and_return([attachment])
       message = RubyLLM::Message.new(role: :user, content: content)
@@ -441,7 +442,8 @@ RSpec.describe RubyLLM::Providers::Bedrock::Chat do
         name: 'get_weather',
         description: 'Get weather info',
         parameters: {},
-        params_schema: nil
+        params_schema: nil,
+        provider_params: {}
       )
       tools_hash = { get_weather: tool }
 
@@ -614,7 +616,8 @@ RSpec.describe RubyLLM::Providers::Bedrock::Chat do
         name: 'get_weather',
         description: 'Get current weather',
         params_schema: schema_def.json_schema,
-        parameters: {}
+        parameters: {},
+        provider_params: {}
       )
 
       result = chat_instance.send(:format_tool_for_converse, tool)
@@ -631,7 +634,8 @@ RSpec.describe RubyLLM::Providers::Bedrock::Chat do
         name: 'simple_tool',
         description: 'A simple tool',
         params_schema: nil,
-        parameters: { arg1: instance_double(RubyLLM::Parameter) }
+        parameters: { arg1: instance_double(RubyLLM::Parameter) },
+        provider_params: {}
       )
 
       # Allow schema generation from parameters
@@ -651,7 +655,8 @@ RSpec.describe RubyLLM::Providers::Bedrock::Chat do
         name: 'no_params_tool',
         description: 'Tool with no params',
         params_schema: nil,
-        parameters: {}
+        parameters: {},
+        provider_params: {}
       )
 
       allow(RubyLLM::Tool::SchemaDefinition).to receive(:from_parameters).and_return(nil)
