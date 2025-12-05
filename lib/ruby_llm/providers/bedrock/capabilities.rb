@@ -246,20 +246,22 @@ module RubyLLM
 
         # Model family patterns for capability lookup
         # Patterns should match AWS Bedrock model ID format closely
+        # IMPORTANT: More specific patterns must come BEFORE less specific ones!
         MODEL_FAMILIES = {
-          # Claude 3.x models
+          # Claude 3.x models (most specific first)
+          /\.claude-3-7-sonnet-/ => :claude3_7_sonnet,
           /\.claude-3-5-sonnet-/ => :claude3_5_sonnet,
           /\.claude-3-5-haiku-/ => :claude3_5_haiku,
-          /\.claude-3-7-sonnet-/ => :claude3_7_sonnet,
           /\.claude-3-haiku-/ => :claude3_haiku,
-          # Claude 4 models
-          /\.claude-sonnet-4-/ => :claude4_sonnet,
-          /\.claude-opus-4-/ => :claude4_opus,
-          /\.claude-opus-4-1-/ => :claude4_1_opus,
-          # Claude 4.5 models
+          # Claude 4.5 models (must come before Claude 4.x patterns)
           /\.claude-sonnet-4-5-/ => :claude4_5_sonnet,
           /\.claude-opus-4-5-/ => :claude4_5_opus,
           /\.claude-haiku-4-5-/ => :claude4_5_haiku,
+          # Claude 4.1 models (must come before Claude 4.x patterns)
+          /\.claude-opus-4-1-/ => :claude4_1_opus,
+          # Claude 4 models (more general patterns last)
+          /\.claude-sonnet-4-/ => :claude4_sonnet,
+          /\.claude-opus-4-/ => :claude4_opus,
           # Amazon Nova models (specific variants first, match vendor prefix)
           /\.nova-2-lite/ => :nova_2_lite,
           /\.nova-premier/ => :nova_premier,
@@ -381,7 +383,8 @@ module RubyLLM
 
           capabilities << 'reasoning' if model_id.match?(/claude/)
 
-          if model_id.match?(/claude-3\.5|claude-3-7|claude-4/)
+          # Claude 3.5+, 3.7+, and Claude 4+ support batch and citations
+          if model_id.match?(/claude-3-5|claude-3-7|claude-[^3]+-4/)
             capabilities << 'batch'
             capabilities << 'citations'
           end
