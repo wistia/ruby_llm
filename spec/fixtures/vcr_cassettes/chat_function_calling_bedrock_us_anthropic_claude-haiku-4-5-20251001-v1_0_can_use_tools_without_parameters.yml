@@ -1,0 +1,106 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.us-west-2.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"What''s the best language
+        to learn?"}]}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","inputSchema":{"json":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}}]}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Host:
+      - bedrock-runtime.us-west-2.amazonaws.com
+      X-Amz-Date:
+      - 20251205T064459Z
+      X-Amz-Security-Token:
+      - "<AWS_SESSION_TOKEN>"
+      X-Amz-Content-Sha256:
+      - bfb2b326b4fe3f9745cb08aff075e5e9d8ab0729b51386b225612c3ded021aed
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20251205/us-west-2/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=497a7ae84f03e3d054075c3d7972dc2e4648f7f06c812c45a2853814d2f700c4
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 05 Dec 2025 06:45:00 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '422'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - c9a0c2eb-a290-4454-984b-f476ffd52ae6
+    body:
+      encoding: UTF-8
+      string: '{"metrics":{"latencyMs":794},"output":{"message":{"content":[{"toolUse":{"input":{},"name":"best_language_to_learn","toolUseId":"tooluse_dEljZIHCQr6jN4aM8dshPw","type":"tool_use"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":571,"outputTokens":41,"serverToolUsage":{},"totalTokens":612}}'
+  recorded_at: Fri, 05 Dec 2025 06:45:00 GMT
+- request:
+    method: post
+    uri: https://bedrock-runtime.us-west-2.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"What''s the best language
+        to learn?"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_dEljZIHCQr6jN4aM8dshPw","name":"best_language_to_learn","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_dEljZIHCQr6jN4aM8dshPw","content":[{"text":"Ruby"}]}}]}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","inputSchema":{"json":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}}]}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Host:
+      - bedrock-runtime.us-west-2.amazonaws.com
+      X-Amz-Date:
+      - 20251205T064500Z
+      X-Amz-Security-Token:
+      - "<AWS_SESSION_TOKEN>"
+      X-Amz-Content-Sha256:
+      - ec38c46aa87b0ba3a9f3bbff05d31d286577ba51183ad205e8cd5f0dc0d2cf3a
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20251205/us-west-2/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=ed4d53a3ea62b847b222002cff56f282a16656c78912b9cc15416f5059d6f7af
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 05 Dec 2025 06:45:03 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '985'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - f54fe89f-f30d-4e94-bcda-c45117648424
+    body:
+      encoding: UTF-8
+      string: '{"metrics":{"latencyMs":2184},"output":{"message":{"content":[{"text":"According
+        to the recommendation, **Ruby** is the best language to learn!\n\nRuby is
+        a great choice because it''s:\n- **Beginner-friendly**: Known for its clean,
+        readable syntax that resembles natural language\n- **Productive**: You can
+        build things quickly with less code\n- **Versatile**: Used for web development
+        (Ruby on Rails), scripting, automation, and more\n- **Great community**: Excellent
+        documentation and supportive community\n- **Fun to learn**: Its design philosophy
+        emphasizes programmer happiness\n\nIf you''re interested in learning Ruby,
+        I''d recommend starting with the basics and exploring frameworks like **Ruby
+        on Rails** for web development projects!"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":625,"outputTokens":143,"serverToolUsage":{},"totalTokens":768}}'
+  recorded_at: Fri, 05 Dec 2025 06:45:03 GMT
+recorded_with: VCR 6.3.1

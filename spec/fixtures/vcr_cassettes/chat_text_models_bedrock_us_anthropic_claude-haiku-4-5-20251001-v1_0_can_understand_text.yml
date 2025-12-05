@@ -1,0 +1,107 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.us-west-2.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"What''s in this file?"},{"text":"<file
+        name=''ruby.txt'' mime_type=''text/plain''>Ruby is the best.</file>"}]}],"inferenceConfig":{"maxTokens":4096}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Host:
+      - bedrock-runtime.us-west-2.amazonaws.com
+      X-Amz-Date:
+      - 20251205T064312Z
+      X-Amz-Security-Token:
+      - "<AWS_SESSION_TOKEN>"
+      X-Amz-Content-Sha256:
+      - 4cf36c2d2827a3b8382f7b105fec2bb0b514559b12210d7aefbdcbf7dd46e164
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20251205/us-west-2/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=20e1233665de5c105ba93c03fc47eb3fc63d75596fb58e5d8c73654c1fa800d9
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 05 Dec 2025 06:43:13 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '531'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - fca1010b-265a-4754-9216-a058a0c9721e
+    body:
+      encoding: UTF-8
+      string: '{"metrics":{"latencyMs":1276},"output":{"message":{"content":[{"text":"#
+        File Contents\n\nThe file `ruby.txt` contains:\n\n```\nRuby is the best.\n```\n\nIt''s
+        a simple plain text file with a single sentence stating that Ruby is the best
+        (likely referring to the Ruby programming language)."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":36,"outputTokens":53,"serverToolUsage":{},"totalTokens":89}}'
+  recorded_at: Fri, 05 Dec 2025 06:43:14 GMT
+- request:
+    method: post
+    uri: https://bedrock-runtime.us-west-2.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"What''s in this file?"},{"text":"<file
+        name=''ruby.txt'' mime_type=''text/plain''>Ruby is the best.</file>"}]},{"role":"assistant","content":[{"text":"#
+        File Contents\n\nThe file `ruby.txt` contains:\n\n```\nRuby is the best.\n```\n\nIt''s
+        a simple plain text file with a single sentence stating that Ruby is the best
+        (likely referring to the Ruby programming language)."}]},{"role":"user","content":[{"text":"and
+        in this one?"},{"text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
+        is the best</truism></file>"}]}],"inferenceConfig":{"maxTokens":4096}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Host:
+      - bedrock-runtime.us-west-2.amazonaws.com
+      X-Amz-Date:
+      - 20251205T064314Z
+      X-Amz-Security-Token:
+      - "<AWS_SESSION_TOKEN>"
+      X-Amz-Content-Sha256:
+      - 3e857616015e850e6e28fd3a144a0178365b4ea94f8c7bf753c7bc5c85c393bc
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20251205/us-west-2/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=6a072fe6e47b52a005502c4609d8f30e9ac28a85a29a345f52c4271846e79f44
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 05 Dec 2025 06:43:15 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '622'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 794beb7c-d339-4d4f-9217-dd724dbd81a7
+    body:
+      encoding: UTF-8
+      string: '{"metrics":{"latencyMs":1181},"output":{"message":{"content":[{"text":"#
+        File Contents\n\nThe file `ruby.xml` contains:\n\n```xml\n<truism>Ruby is
+        the best</truism>\n```\n\nIt''s an XML file with a single element called `<truism>`
+        that contains the text \"Ruby is the best\". The XML structure suggests this
+        statement is being marked or tagged as a truism (a self-evident truth)."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":127,"outputTokens":83,"serverToolUsage":{},"totalTokens":210}}'
+  recorded_at: Fri, 05 Dec 2025 06:43:15 GMT
+recorded_with: VCR 6.3.1

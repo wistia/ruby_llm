@@ -1,0 +1,51 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.us-west-2.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"text":"Hi"}]}],"inferenceConfig":{"maxTokens":4096}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Host:
+      - bedrock-runtime.us-west-2.amazonaws.com
+      X-Amz-Date:
+      - 20251205T064518Z
+      X-Amz-Security-Token:
+      - "<AWS_SESSION_TOKEN>"
+      X-Amz-Content-Sha256:
+      - 4db19dc1465cf5eabd86fb145897819d3b9189c45dcba73348a4ab6a0042db7f
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20251205/us-west-2/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=70fc806c1ea762b1148775fa3c3c847ba82bac9b8f9b5905d7d86b53ab13223e
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Date:
+      - Fri, 05 Dec 2025 06:45:24 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '93'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 74d032d9-2e7a-430f-8840-fddcac0fcabe
+      X-Amzn-Errortype:
+      - ValidationException:http://internal.amazon.com/coral/com.amazon.bedrock/
+    body:
+      encoding: UTF-8
+      string: '{"message":"The model returned the following errors: Input is too long
+        for requested model."}'
+  recorded_at: Fri, 05 Dec 2025 06:45:25 GMT
+recorded_with: VCR 6.3.1

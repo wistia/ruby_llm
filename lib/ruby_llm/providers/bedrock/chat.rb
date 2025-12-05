@@ -46,7 +46,7 @@ module RubyLLM
               {
                 document: {
                   format: extract_document_format(part[:source][:media_type]),
-                  name: 'document',
+                  name: part[:name] || 'document',
                   source: {
                     bytes: part[:source][:data]
                   }
@@ -158,9 +158,64 @@ module RubyLLM
         end
 
         def build_base_payload(chat_messages, model)
+          # Filter out messages with no content and no tool calls (can happen with streaming)
+          valid_messages = chat_messages.reject do |msg|
+            msg.role == :assistant && msg.content.nil? && (msg.tool_calls.nil? || msg.tool_calls.empty?)
+          end
+
           {
-            messages: chat_messages.map { |msg| format_message(msg) }
+            messages: combine_tool_results(valid_messages).map { |msg| format_message(msg) }
           }
+        end
+
+        # Combines consecutive tool result messages into a single message
+        # This is required by Bedrock's Converse API when handling parallel tool calls
+        def combine_tool_results(messages)
+          combined = []
+          tool_results_buffer = []
+
+          messages.each do |msg|
+            if msg.tool_result?
+              tool_results_buffer << msg
+            else
+              # Flush accumulated tool results as a single combined message
+              unless tool_results_buffer.empty?
+                combined << create_combined_tool_result_message(tool_results_buffer)
+                tool_results_buffer = []
+              end
+              combined << msg
+            end
+          end
+
+          # Flush any remaining tool results
+          unless tool_results_buffer.empty?
+            combined << create_combined_tool_result_message(tool_results_buffer)
+          end
+
+          combined
+        end
+
+        # Creates a single message containing multiple tool results
+        def create_combined_tool_result_message(tool_result_messages)
+          return tool_result_messages.first if tool_result_messages.length == 1
+
+          # Create a combined message with Raw content containing all tool results
+          all_tool_results = tool_result_messages.map do |msg|
+            {
+              toolResult: {
+                toolUseId: msg.tool_call_id,
+                content: Media.format_content(msg.content).map { |c|
+                  c[:type] == 'text' || c[:text] ? { text: c[:text] || c[:content] } : c
+                }
+              }
+            }
+          end
+
+          Message.new(
+            role: :tool,
+            content: Content::Raw.new(all_tool_results),
+            tool_call_id: tool_result_messages.first.tool_call_id # Keep first ID for reference
+          )
         end
 
         def build_converse_system_content(system_messages)
@@ -206,13 +261,17 @@ module RubyLLM
           input_schema = tool.params_schema ||
                          RubyLLM::Tool::SchemaDefinition.from_parameters(tool.parameters)&.json_schema
 
-          {
+          tool_spec = {
             toolSpec: {
               name: tool.name,
               description: tool.description,
               inputSchema: { json: input_schema || Anthropic::Tools.default_input_schema }
             }
           }
+
+          return tool_spec if tool.provider_params.empty?
+
+          RubyLLM::Utils.deep_merge(tool_spec, tool.provider_params)
         end
 
         def parse_converse_response(response)

@@ -10,7 +10,6 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
-      next if provider == :bedrock # Bedrock has dedicated specs in spec/ruby_llm/providers/bedrock/
 
       it "#{provider}/#{model} supports streaming responses" do
         chat = RubyLLM.chat(model: model, provider: provider)
@@ -52,7 +51,6 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
-      next if provider == :bedrock # Bedrock has dedicated specs in spec/ruby_llm/providers/bedrock/
 
       context "with #{provider}/#{model}" do
         let(:chat) { RubyLLM.chat(model: model, provider: provider) }
@@ -63,6 +61,8 @@ RSpec.describe RubyLLM::Chat do
           end
 
           it "#{provider}/#{model} supports handling streaming error chunks" do
+            skip 'Bedrock uses AWS Event Stream format, mocked SSE errors not compatible' if provider == :bedrock
+
             # Testing if error handling is now implemented
 
             stub_error_response(provider, :chunk)
@@ -99,6 +99,8 @@ RSpec.describe RubyLLM::Chat do
           end
 
           it "#{provider}/#{model} supports handling streaming error chunks" do
+            skip 'Bedrock uses AWS Event Stream format, mocked SSE errors not compatible' if provider == :bedrock
+
             # Testing if error handling is now implemented
 
             stub_error_response(provider, :chunk)

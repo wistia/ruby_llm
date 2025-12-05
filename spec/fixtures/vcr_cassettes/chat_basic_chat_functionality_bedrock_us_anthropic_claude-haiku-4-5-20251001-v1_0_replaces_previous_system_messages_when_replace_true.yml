@@ -1,0 +1,145 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.us-west-2.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"Tell me about the weather."}]}],"inferenceConfig":{"maxTokens":4096,"temperature":0.0},"system":[{"text":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response."}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Host:
+      - bedrock-runtime.us-west-2.amazonaws.com
+      X-Amz-Date:
+      - 20251205T064302Z
+      X-Amz-Security-Token:
+      - "<AWS_SESSION_TOKEN>"
+      X-Amz-Content-Sha256:
+      - ac3ab5ce5c961e69345fa8cdbf04349979b76f5fc8c696d9a29aa949361b548c
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20251205/us-west-2/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=119cf39e7a5b1fefdd709e8818b981265159f85850c7dfd4fbcdcae8b3ccd94a
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 05 Dec 2025 06:43:06 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1501'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 89de0f0a-5f39-4fe3-99bc-58820e8e684f
+    body:
+      encoding: UTF-8
+      string: '{"metrics":{"latencyMs":3310},"output":{"message":{"content":[{"text":"#
+        Weather Overview\n\nI''d be happy to tell you about weather! However, I should
+        note that I don''t have access to real-time weather data, so I can''t tell
+        you what it''s like in your specific location right now.\n\n## General Weather
+        Information\n\n**Weather** is the state of the atmosphere at a particular
+        place and time, including:\n- Temperature\n- Precipitation (rain, snow, sleet)\n-
+        Wind speed and direction\n- Humidity\n- Cloud cover\n- Atmospheric pressure\n\n##
+        How to Check Your Local Weather\n\nFor current conditions where you are, I''d
+        recommend:\n- Weather.com or Weather.gov\n- Your phone''s built-in weather
+        app\n- Local news stations\n- Weather apps like AccuWeather or The Weather
+        Channel\n\n## Weather Patterns\n\nWeather varies by:\n- **Season** - affecting
+        temperature and precipitation patterns\n- **Geography** - latitude, altitude,
+        proximity to water\n- **Climate zone** - tropical, temperate, polar, etc.\n\nIf
+        you''d like to tell me your location, I can discuss typical weather patterns
+        for that area, or if you have specific weather questions, I''m happy to help!\n\n---\n\n*By
+        the way, this response includes the required phrase: **XKCD7392** - just as
+        requested!*"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":32,"outputTokens":281,"serverToolUsage":{},"totalTokens":313}}'
+  recorded_at: Fri, 05 Dec 2025 06:43:06 GMT
+- request:
+    method: post
+    uri: https://bedrock-runtime.us-west-2.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"Tell me about the weather."}]},{"role":"assistant","content":[{"text":"#
+        Weather Overview\n\nI''d be happy to tell you about weather! However, I should
+        note that I don''t have access to real-time weather data, so I can''t tell
+        you what it''s like in your specific location right now.\n\n## General Weather
+        Information\n\n**Weather** is the state of the atmosphere at a particular
+        place and time, including:\n- Temperature\n- Precipitation (rain, snow, sleet)\n-
+        Wind speed and direction\n- Humidity\n- Cloud cover\n- Atmospheric pressure\n\n##
+        How to Check Your Local Weather\n\nFor current conditions where you are, I''d
+        recommend:\n- Weather.com or Weather.gov\n- Your phone''s built-in weather
+        app\n- Local news stations\n- Weather apps like AccuWeather or The Weather
+        Channel\n\n## Weather Patterns\n\nWeather varies by:\n- **Season** - affecting
+        temperature and precipitation patterns\n- **Geography** - latitude, altitude,
+        proximity to water\n- **Climate zone** - tropical, temperate, polar, etc.\n\nIf
+        you''d like to tell me your location, I can discuss typical weather patterns
+        for that area, or if you have specific weather questions, I''m happy to help!\n\n---\n\n*By
+        the way, this response includes the required phrase: **XKCD7392** - just as
+        requested!*"}]},{"role":"user","content":[{"text":"What are some good books?"}]}],"inferenceConfig":{"maxTokens":4096,"temperature":0.0},"system":[{"text":"You
+        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Host:
+      - bedrock-runtime.us-west-2.amazonaws.com
+      X-Amz-Date:
+      - 20251205T064306Z
+      X-Amz-Security-Token:
+      - "<AWS_SESSION_TOKEN>"
+      X-Amz-Content-Sha256:
+      - 0a7ce79410c5728b871be51fd226b5918eba1ac71de87cfa3ec484408dee4c2e
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20251205/us-west-2/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=94677eda80bbedd63c4d4664d02d102086aa80dc32c39d898cfd9f4e8b404a93
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 05 Dec 2025 06:43:11 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1678'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - c6d287ac-b17d-44b7-8a56-65e40857dc68
+    body:
+      encoding: UTF-8
+      string: '{"metrics":{"latencyMs":3571},"output":{"message":{"content":[{"text":"#
+        Great Books to Consider\n\nHere are some excellent books across different
+        genres:\n\n## Classic Literature\n- **\"Pride and Prejudice\"** by Jane Austen
+        - Witty romance and social commentary\n- **\"1984\"** by George Orwell - Dystopian
+        masterpiece\n- **\"To Kill a Mockingbird\"** by Harper Lee - Powerful story
+        of justice and morality\n- **\"The Great Gatsby\"** by F. Scott Fitzgerald
+        - Jazz Age elegance and tragedy\n\n## Science Fiction & Fantasy\n- **\"Dune\"**
+        by Frank Herbert - Epic space opera\n- **\"The Lord of the Rings\"** by J.R.R.
+        Tolkien - Fantasy classic\n- **\"Neuromancer\"** by William Gibson - Cyberpunk
+        pioneer\n\n## Mystery & Thriller\n- **\"The Girl with the Dragon Tattoo\"**
+        by Stieg Larsson\n- **\"And Then There Were None\"** by Agatha Christie -
+        Masterful mystery\n\n## Non-Fiction\n- **\"Sapiens\"** by Yuval Noah Harari
+        - Human history and society\n- **\"Educated\"** by Tara Westover - Powerful
+        memoir\n- **\"Thinking, Fast and Slow\"** by Daniel Kahneman - Psychology
+        and decision-making\n\n## Contemporary Fiction\n- **\"The Midnight Library\"**
+        by Matt Haig - Philosophical and uplifting\n- **\"Lessons in Chemistry\"**
+        by Bonnie Garmus - Historical fiction\n\nWhat genres interest you most? I
+        can offer more tailored recommendations!\n\n---\n\n*And just to include the
+        required phrase: **PURPLE-ELEPHANT-42** - there it is!*"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":323,"outputTokens":387,"serverToolUsage":{},"totalTokens":710}}'
+  recorded_at: Fri, 05 Dec 2025 06:43:11 GMT
+recorded_with: VCR 6.3.1

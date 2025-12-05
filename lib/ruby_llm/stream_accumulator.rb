@@ -46,6 +46,8 @@ module RubyLLM
     private
 
     def tool_calls_from_stream
+      return nil if tool_calls.empty?
+
       tool_calls.transform_values do |tc|
         arguments = if tc.arguments.is_a?(String) && !tc.arguments.empty?
                       JSON.parse(tc.arguments)

@@ -22,18 +22,34 @@ module RubyLLM
 
           def extract_tool_calls(data)
             # Extract tool calls from Converse Stream format
-            return nil unless data['delta']
+            # Tool use starts in 'start' block, then deltas come in 'delta' block
+            tool_use_start = data.dig('start', 'toolUse')
+            tool_use_delta = data.dig('delta', 'toolUse')
 
-            tool_use = data.dig('delta', 'toolUse')
-            return nil unless tool_use
 
-            {
-              tool_use['toolUseId'] => ToolCall.new(
-                id: tool_use['toolUseId'],
-                name: tool_use['name'],
-                arguments: {}
-              )
-            }
+            return nil unless tool_use_start || tool_use_delta
+
+            if tool_use_start
+              # Initial tool use block with metadata
+              tool_calls = {
+                tool_use_start['toolUseId'] => ToolCall.new(
+                  id: tool_use_start['toolUseId'],
+                  name: tool_use_start['name'],
+                  arguments: +''
+                )
+              }
+              tool_calls
+            elsif tool_use_delta
+              # Delta with input arguments (no id/name in delta)
+              tool_calls = {
+                nil => ToolCall.new(
+                  id: nil,
+                  name: nil,
+                  arguments: tool_use_delta['input'] || ''
+                )
+              }
+              tool_calls
+            end
           end
 
           def extract_model_id(data)

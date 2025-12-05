@@ -157,7 +157,6 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
-      next if provider == :bedrock # Bedrock has dedicated specs in spec/ruby_llm/providers/bedrock/
 
       it "#{provider}/#{model} can use tools" do
         supports_functions? provider, model
@@ -178,9 +177,8 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
       model = model_info[:model]
       provider = model_info[:provider]
-      next if provider == :bedrock # Bedrock has dedicated specs in spec/ruby_llm/providers/bedrock/
 
-      model = 'claude-sonnet-4' if provider == :bedrock # haiku can't do parallel tool calls
+      model = 'us.anthropic.claude-sonnet-4-5-20250929-v1:0' if provider == :bedrock # haiku can't do parallel tool calls
       it "#{provider}/#{model} can use parallel tool calls" do
         supports_functions? provider, model
         skip 'gpustack/qwen3 does not support parallel tool calls properly' if provider == :gpustack && model == 'qwen3'
@@ -201,7 +199,6 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
       model = model_info[:model]
       provider = model_info[:provider]
-      next if provider == :bedrock # Bedrock has dedicated specs in spec/ruby_llm/providers/bedrock/
 
       it "#{provider}/#{model} can use tools in multi-turn conversations" do
         supports_functions? provider, model
@@ -226,7 +223,6 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
       model = model_info[:model]
       provider = model_info[:provider]
-      next if provider == :bedrock # Bedrock has dedicated specs in spec/ruby_llm/providers/bedrock/
 
       it "#{provider}/#{model} can use tools without parameters" do
         supports_functions? provider, model
@@ -243,7 +239,6 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
       model = model_info[:model]
       provider = model_info[:provider]
-      next if provider == :bedrock # Bedrock has dedicated specs in spec/ruby_llm/providers/bedrock/
 
       it "#{provider}/#{model} can use tools without parameters in multi-turn streaming conversations" do
         supports_functions? provider, model
@@ -281,7 +276,6 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
       model = model_info[:model]
       provider = model_info[:provider]
-      next if provider == :bedrock # Bedrock has dedicated specs in spec/ruby_llm/providers/bedrock/
 
       it "#{provider}/#{model} can use tools with multi-turn streaming conversations" do
         supports_functions? provider, model
@@ -318,7 +312,6 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
       model = model_info[:model]
       provider = model_info[:provider]
-      next if provider == :bedrock # Bedrock has dedicated specs in spec/ruby_llm/providers/bedrock/
 
       it "#{provider}/#{model} can handle multiple tool calls in a single response" do
         supports_functions? provider, model
@@ -376,6 +369,8 @@ RSpec.describe RubyLLM::Chat do
         extracted = case provider
                     when :gemini, :vertexai
                       captured_payload.dig(:tools, 0, :functionDeclarations, 0, :cache_control)
+                    when :bedrock
+                      captured_payload.dig(:toolConfig, :tools, 0, :cache_control)
                     else
                       captured_payload.dig(:tools, 0, :cache_control)
                     end
@@ -387,7 +382,6 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
       model = model_info[:model]
       provider = model_info[:provider]
-      next if provider == :bedrock # Bedrock has dedicated specs in spec/ruby_llm/providers/bedrock/
 
       it "#{provider}/#{model} handles array params" do
         supports_functions? provider, model
@@ -414,7 +408,6 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
       model = model_info[:model]
       provider = model_info[:provider]
-      next if provider == :bedrock # Bedrock has dedicated specs in spec/ruby_llm/providers/bedrock/
 
       it "#{provider}/#{model} handles anyOf params" do
         supports_functions? provider, model
@@ -442,7 +435,6 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
       model = model_info[:model]
       provider = model_info[:provider]
-      next if provider == :bedrock # Bedrock has dedicated specs in spec/ruby_llm/providers/bedrock/
 
       it "#{provider}/#{model} handles object params" do
         supports_functions? provider, model
@@ -523,7 +515,6 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
-      next if provider == :bedrock # Bedrock has dedicated specs in spec/ruby_llm/providers/bedrock/
 
       it "#{provider}/#{model} preserves Content objects returned from tools" do
         supports_functions? provider, model

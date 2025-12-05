@@ -1,0 +1,65 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.us-west-2.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"Tell me about the weather."}]}],"inferenceConfig":{"maxTokens":4096,"temperature":0.0},"system":[{"text":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response."}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Host:
+      - bedrock-runtime.us-west-2.amazonaws.com
+      X-Amz-Date:
+      - 20251205T064258Z
+      X-Amz-Security-Token:
+      - "<AWS_SESSION_TOKEN>"
+      X-Amz-Content-Sha256:
+      - ac3ab5ce5c961e69345fa8cdbf04349979b76f5fc8c696d9a29aa949361b548c
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20251205/us-west-2/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=8eddbc5ed3293f84163a21326a6149790168d911013795c55e7628556da89ef0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 05 Dec 2025 06:43:02 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1501'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 3668a320-9210-4a41-8449-d3bb194da858
+    body:
+      encoding: UTF-8
+      string: '{"metrics":{"latencyMs":3377},"output":{"message":{"content":[{"text":"#
+        Weather Overview\n\nI''d be happy to tell you about weather! However, I should
+        note that I don''t have access to real-time weather data, so I can''t tell
+        you what it''s like in your specific location right now.\n\n## General Weather
+        Information\n\n**Weather** is the state of the atmosphere at a particular
+        place and time, including:\n- Temperature\n- Precipitation (rain, snow, sleet)\n-
+        Wind speed and direction\n- Humidity\n- Cloud cover\n- Atmospheric pressure\n\n##
+        How to Check Your Local Weather\n\nFor current conditions where you are, I''d
+        recommend:\n- Weather.com or Weather.gov\n- Your phone''s built-in weather
+        app\n- Local news stations\n- Weather apps like AccuWeather or The Weather
+        Channel\n\n## Weather Patterns\n\nWeather varies by:\n- **Season** - affecting
+        temperature and precipitation patterns\n- **Geography** - latitude, altitude,
+        proximity to water\n- **Climate zone** - tropical, temperate, polar, etc.\n\nIf
+        you''d like to tell me your location, I can discuss typical weather patterns
+        for that area, or if you have specific weather questions, I''m happy to help!\n\n---\n\n*By
+        the way, this response includes the required phrase: **XKCD7392** - just as
+        requested!*"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":32,"outputTokens":281,"serverToolUsage":{},"totalTokens":313}}'
+  recorded_at: Fri, 05 Dec 2025 06:43:02 GMT
+recorded_with: VCR 6.3.1
