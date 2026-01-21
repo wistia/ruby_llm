@@ -178,7 +178,7 @@ RSpec.describe RubyLLM::Chat do
       model = model_info[:model]
       provider = model_info[:provider]
 
-      model = 'us.anthropic.claude-sonnet-4-5-20250929-v1:0' if provider == :bedrock # haiku can't do parallel tool calls
+      model = 'us.anthropic.claude-sonnet-4-5-20250929-v1:0' if [:bedrock, :bedrock_converse].include?(provider) # haiku can't do parallel tool calls
       it "#{provider}/#{model} can use parallel tool calls" do
         supports_functions? provider, model
         skip 'gpustack/qwen3 does not support parallel tool calls properly' if provider == :gpustack && model == 'qwen3'
@@ -369,7 +369,7 @@ RSpec.describe RubyLLM::Chat do
         extracted = case provider
                     when :gemini, :vertexai
                       captured_payload.dig(:tools, 0, :functionDeclarations, 0, :cache_control)
-                    when :bedrock
+                    when :bedrock, :bedrock_converse
                       captured_payload.dig(:toolConfig, :tools, 0, :cache_control)
                     else
                       captured_payload.dig(:tools, 0, :cache_control)
@@ -520,7 +520,7 @@ RSpec.describe RubyLLM::Chat do
         supports_functions? provider, model
 
         # Skip providers that don't support images in tool results
-        skip "#{provider} doesn't support images in tool results" if provider.in?(%i[deepseek gpustack bedrock])
+        skip "#{provider} doesn't support images in tool results" if provider.in?(%i[deepseek gpustack bedrock bedrock_converse])
 
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(ContentReturningTool)

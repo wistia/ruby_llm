@@ -89,6 +89,17 @@ module StreamingErrorHelpers
       chunk_status: 500,
       expected_error: RubyLLM::ServerError
     },
+    bedrock_converse: {
+      url: %r{https://bedrock-runtime\..*\.amazonaws\.com/model/.*/converse-stream},
+      error_response: {
+        error: {
+          message: 'Service overloaded - please try again later',
+          type: 'server_error'
+        }
+      },
+      chunk_status: 500,
+      expected_error: RubyLLM::ServerError
+    },
     gpustack: {
       url: 'http://localhost:11444/v1/chat/completions',
       error_response: {
