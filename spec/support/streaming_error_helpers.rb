@@ -105,6 +105,17 @@ module StreamingErrorHelpers
       chunk_status: 500,
       expected_error: RubyLLM::ServerError
     },
+    bedrock_converse: {
+      url: 'https://bedrock-runtime.us-west-2.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse-stream',
+      error_response: {
+        error: {
+          message: 'Service overloaded - please try again later',
+          type: 'server_error'
+        }
+      },
+      chunk_status: 500,
+      expected_error: RubyLLM::ServerError
+    },
     gpustack: {
       url: lambda {
         base = RubyLLM.config.gpustack_api_base.to_s
