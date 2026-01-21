@@ -68,11 +68,23 @@ module RubyLLM
       def extract_provider_from_model_id(model_id, provider)
         return provider if provider || !model_id.include?('/')
 
-        model_id.split('/', 2).first
+        parts = model_id.split('/')
+        # Handle bedrock/converse/model-id format
+        if parts.length >= 2 && parts[0] == 'bedrock' && parts[1] == 'converse'
+          'bedrock_converse'
+        else
+          parts.first
+        end
       end
 
       def strip_provider_prefix(model_id)
-        model_id.split('/', 2).last
+        parts = model_id.split('/')
+        # Handle bedrock/converse/model-id format
+        if parts.length >= 2 && parts[0] == 'bedrock' && parts[1] == 'converse'
+          parts[2..].join('/')
+        else
+          parts[1..].join('/')
+        end
       end
 
       def local_provider?(provider, config)
@@ -106,8 +118,10 @@ module RubyLLM
         begin
           model = Models.find(model_id, provider)
         rescue ModelNotFoundError
-          # Allow raw model IDs for Bedrock (they use ARN-style IDs not in registry)
-          return create_bedrock_fallback(model_id, config) if provider.to_s == 'bedrock'
+          # Allow raw model IDs for Bedrock and BedrockConverse (they use ARN-style IDs not in registry)
+          if %w[bedrock bedrock_converse].include?(provider.to_s)
+            return create_bedrock_fallback(model_id, provider.to_s, config)
+          end
 
           raise
         end
@@ -116,8 +130,8 @@ module RubyLLM
         [model, provider_instance]
       end
 
-      def create_bedrock_fallback(model_id, config)
-        provider_instance = get_provider_instance('bedrock', config)
+      def create_bedrock_fallback(model_id, provider_name, config)
+        provider_instance = get_provider_instance(provider_name, config)
         model = Model::Info.default(model_id, provider_instance.slug)
         [model, provider_instance]
       end
