@@ -10,7 +10,6 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
-
       it "#{provider}/#{model} supports streaming responses" do
         chat = RubyLLM.chat(model: model, provider: provider)
         chunks = []
@@ -29,6 +28,7 @@ RSpec.describe RubyLLM::Chat do
       end
 
       it "#{provider}/#{model} reports consistent token counts compared to non-streaming" do
+        model = 'gpt-4.1-nano' if provider == :openai # gpt-5 sets temperature to 1.0
         skip 'Perplexity reports different token counts for streaming vs non-streaming' if provider == :perplexity
 
         chat = RubyLLM.chat(model: model, provider: provider).with_temperature(0.0)
@@ -61,8 +61,6 @@ RSpec.describe RubyLLM::Chat do
           end
 
           it "#{provider}/#{model} supports handling streaming error chunks" do
-            skip 'Bedrock uses AWS Event Stream format, mocked SSE errors not compatible' if provider == :bedrock
-
             # Testing if error handling is now implemented
 
             stub_error_response(provider, :chunk)
@@ -77,7 +75,7 @@ RSpec.describe RubyLLM::Chat do
           end
 
           it "#{provider}/#{model} supports handling streaming error events" do
-            skip 'Bedrock uses AWS Event Stream format, not SSE events' if %i[bedrock bedrock_converse].include?(provider)
+            skip 'Bedrock uses AWS Event Stream format, not SSE events' if provider == :bedrock
 
             # Testing if error handling is now implemented
 
@@ -99,8 +97,6 @@ RSpec.describe RubyLLM::Chat do
           end
 
           it "#{provider}/#{model} supports handling streaming error chunks" do
-            skip 'Bedrock uses AWS Event Stream format, mocked SSE errors not compatible' if %i[bedrock bedrock_converse].include?(provider)
-
             # Testing if error handling is now implemented
 
             stub_error_response(provider, :chunk)
@@ -115,7 +111,7 @@ RSpec.describe RubyLLM::Chat do
           end
 
           it "#{provider}/#{model} supports handling streaming error events" do
-            skip 'Bedrock uses AWS Event Stream format, not SSE events' if %i[bedrock bedrock_converse].include?(provider)
+            skip 'Bedrock uses AWS Event Stream format, not SSE events' if provider == :bedrock
 
             # Testing if error handling is now implemented
 

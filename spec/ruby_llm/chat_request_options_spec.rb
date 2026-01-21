@@ -84,7 +84,6 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.select { |model_info| %i[openrouter bedrock].include?(model_info[:provider]) }.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
-
       it "#{provider}/#{model} supports top_k param" do
         chat = RubyLLM
                .chat(model: model, provider: provider)

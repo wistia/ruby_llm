@@ -25,7 +25,6 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
-
       it "#{provider}/#{model} can understand text" do
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask("What's in this file?", with: text_path)
@@ -62,7 +61,6 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
     VISION_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
-
       it "#{provider}/#{model} can understand local images" do
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask('What do you see in this image?', with: { image: image_path })
@@ -162,7 +160,6 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
     PDF_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
-
       it "#{provider}/#{model} understands PDFs" do
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask('Summarize this document', with: { pdf: pdf_path })
@@ -183,9 +180,6 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
         expect(response.content).not_to include('RubyLLM::Content')
         expect(chat.messages.first.content.attachments.first.filename).to eq('sample.pdf')
         expect(chat.messages.first.content.attachments.first.mime_type).to eq('application/pdf')
-        # Note: Bedrock requires unique document names, so duplicate filenames get a suffix
-        # The second PDF will still show 'sample.pdf' as the filename in the attachment object,
-        # but will be sent to the API with a unique name
         expect(chat.messages.first.content.attachments.second.filename).to eq('sample.pdf')
         expect(chat.messages.first.content.attachments.second.mime_type).to eq('application/pdf')
 

@@ -6,9 +6,8 @@ module RubyLLM
     include Enumerable
 
     attr_reader :model, :messages, :tools, :params, :headers, :schema
-    attr_accessor :max_tool_iterations
 
-    def initialize(model: nil, provider: nil, assume_model_exists: false, context: nil, max_tool_iterations: 10)
+    def initialize(model: nil, provider: nil, assume_model_exists: false, context: nil)
       if assume_model_exists && !provider
         raise ArgumentError, 'Provider must be specified if assume_model_exists is true'
       end
@@ -23,8 +22,7 @@ module RubyLLM
       @params = {}
       @headers = {}
       @schema = nil
-      @max_tool_iterations = max_tool_iterations
-      @tool_iteration_count = 0
+      @thinking = nil
       @on = {
         new_message: nil,
         end_message: nil,
@@ -34,7 +32,6 @@ module RubyLLM
     end
 
     def ask(message = nil, with: nil, &)
-      @tool_iteration_count = 0 # Reset counter for new conversation turn
       add_message role: :user, content: build_content(message, with)
       complete(&)
     end
@@ -68,6 +65,13 @@ module RubyLLM
 
     def with_temperature(temperature)
       @temperature = temperature
+      self
+    end
+
+    def with_thinking(effort: nil, budget: nil)
+      raise ArgumentError, 'with_thinking requires :effort or :budget' if effort.nil? && budget.nil?
+
+      @thinking = Thinking::Config.new(effort: effort, budget: budget)
       self
     end
 
@@ -134,6 +138,7 @@ module RubyLLM
         params: @params,
         headers: @headers,
         schema: @schema,
+        thinking: @thinking,
         &wrap_streaming_block(&)
       )
 
@@ -176,15 +181,9 @@ module RubyLLM
     def wrap_streaming_block(&block)
       return nil unless block_given?
 
-      first_chunk_received = false
+      @on[:new_message]&.call
 
       proc do |chunk|
-        # Create message on first content chunk
-        unless first_chunk_received
-          first_chunk_received = true
-          @on[:new_message]&.call
-        end
-
         block.call chunk
       end
     end
@@ -193,18 +192,6 @@ module RubyLLM
       halt_result = nil
 
       response.tool_calls.each_value do |tool_call|
-        @tool_iteration_count += 1
-
-        # Check if we've exceeded max iterations
-        if @max_tool_iterations && @tool_iteration_count > @max_tool_iterations
-          error_message = "Maximum tool iterations (#{@max_tool_iterations}) exceeded. " \
-                          "The model appears to be stuck in a tool-calling loop. " \
-                          "This usually indicates the model doesn't know when to stop calling tools. " \
-                          "Consider using a different model with better tool calling support, " \
-                          "or increase max_tool_iterations if this is expected behavior."
-          raise StandardError, error_message
-        end
-
         @on[:new_message]&.call
         @on[:tool_call]&.call(tool_call)
         result = execute_tool tool_call

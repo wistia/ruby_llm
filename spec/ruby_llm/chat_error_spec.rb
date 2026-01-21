@@ -33,7 +33,6 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
-
       context "with #{provider}/#{model}" do
         let(:chat) { RubyLLM.chat(model: model, provider: provider) }
 
@@ -69,13 +68,15 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
-
       context "#{provider}/#{model}" do # rubocop:disable RSpec/ContextWording
         let(:chat) { RubyLLM.chat(model: model, provider: provider) }
 
         it 'handles context length exceeded errors' do
           if RubyLLM::Provider.providers[provider]&.local?
             skip('Local providers do not throw an error for context length exceeded')
+          end
+          if provider == :xai && model == 'grok-4-fast-non-reasoning'
+            skip('xAI grok-4-fast-non-reasoning does not reliably error on context length exceeded')
           end
 
           # Configure Psych to allow large input (JRuby's ext provider SnakeYAML has a low limit by default)

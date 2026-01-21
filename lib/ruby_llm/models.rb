@@ -5,6 +5,18 @@ module RubyLLM
   class Models
     include Enumerable
 
+    MODELS_DEV_PROVIDER_MAP = {
+      'openai' => 'openai',
+      'anthropic' => 'anthropic',
+      'google' => 'gemini',
+      'google-vertex' => 'vertexai',
+      'amazon-bedrock' => 'bedrock',
+      'deepseek' => 'deepseek',
+      'mistral' => 'mistral',
+      'openrouter' => 'openrouter',
+      'perplexity' => 'perplexity'
+    }.freeze
+
     class << self
       def instance
         @instance ||= new
@@ -26,124 +38,87 @@ module RubyLLM
       end
 
       def refresh!(remote_only: false)
-        provider_models = fetch_from_providers(remote_only: remote_only)
-        parsera_models = fetch_from_parsera
-        merged_models = merge_models(provider_models, parsera_models)
+        existing_models = load_existing_models
+
+        provider_fetch = fetch_provider_models(remote_only: remote_only)
+        log_provider_fetch(provider_fetch)
+
+        models_dev_fetch = fetch_models_dev_models(existing_models)
+        log_models_dev_fetch(models_dev_fetch)
+
+        merged_models = merge_with_existing(existing_models, provider_fetch, models_dev_fetch)
         @instance = new(merged_models)
       end
 
-      def fetch_from_providers(remote_only: true)
+      def fetch_provider_models(remote_only: true) # rubocop:disable Metrics/PerceivedComplexity
         config = RubyLLM.config
+        provider_classes = remote_only ? Provider.remote_providers.values : Provider.providers.values
         configured_classes = if remote_only
                                Provider.configured_remote_providers(config)
                              else
                                Provider.configured_providers(config)
                              end
-        configured = configured_classes.map { |klass| klass.new(config) }
+        configured = configured_classes.select { |klass| provider_classes.include?(klass) }
+        result = {
+          models: [],
+          fetched_providers: [],
+          configured_names: configured.map(&:name),
+          failed: []
+        }
 
-        RubyLLM.logger.info "Fetching models from providers: #{configured.map(&:name).join(', ')}"
+        provider_classes.each do |provider_class|
+          next if remote_only && provider_class.local?
+          next unless provider_class.configured?(config)
 
-        configured.flat_map(&:list_models)
+          begin
+            result[:models].concat(provider_class.new(config).list_models)
+            result[:fetched_providers] << provider_class.slug
+          rescue StandardError => e
+            result[:failed] << { name: provider_class.name, slug: provider_class.slug, error: e }
+          end
+        end
+
+        result[:fetched_providers].uniq!
+        result
       end
 
-      def resolve(model_id, provider: nil, assume_exists: false, config: nil)
+      # Backwards-compatible wrapper used by specs.
+      def fetch_from_providers(remote_only: true)
+        fetch_provider_models(remote_only: remote_only)[:models]
+      end
+
+      def resolve(model_id, provider: nil, assume_exists: false, config: nil) # rubocop:disable Metrics/PerceivedComplexity
         config ||= RubyLLM.config
+        provider_class = provider ? Provider.providers[provider.to_sym] : nil
 
-        # Parse provider/model format (e.g., "bedrock/global.amazon.nova-2-lite-v1:0")
-        provider = extract_provider_from_model_id(model_id, provider)
-        model_id = strip_provider_prefix(model_id) if model_id.include?('/')
-
-        # Auto-enable assume_exists for local providers
-        assume_exists = true if provider && local_provider?(provider, config)
+        if provider_class
+          temp_instance = provider_class.new(config)
+          assume_exists = true if temp_instance.local?
+        end
 
         if assume_exists
-          resolve_with_assume_exists(model_id, provider, config)
-        else
-          resolve_by_lookup(model_id, provider, config)
-        end
-      end
+          raise ArgumentError, 'Provider must be specified if assume_exists is true' unless provider
 
-      private
+          provider_class ||= raise(Error, "Unknown provider: #{provider.to_sym}")
+          provider_instance = provider_class.new(config)
 
-      def extract_provider_from_model_id(model_id, provider)
-        return provider if provider || !model_id.include?('/')
-
-        parts = model_id.split('/')
-        # Handle bedrock/converse/model-id format
-        if parts.length >= 2 && parts[0] == 'bedrock' && parts[1] == 'converse'
-          'bedrock_converse'
-        else
-          parts.first
-        end
-      end
-
-      def strip_provider_prefix(model_id)
-        parts = model_id.split('/')
-        # Handle bedrock/converse/model-id format
-        if parts.length >= 2 && parts[0] == 'bedrock' && parts[1] == 'converse'
-          parts[2..].join('/')
-        else
-          parts[1..].join('/')
-        end
-      end
-
-      def local_provider?(provider, config)
-        provider_class = Provider.providers[provider.to_sym]
-        return false unless provider_class
-
-        provider_class.new(config).local?
-      end
-
-      def resolve_with_assume_exists(model_id, provider, config)
-        raise ArgumentError, 'Provider must be specified if assume_exists is true' unless provider
-
-        provider_instance = get_provider_instance(provider, config)
-
-        # Try to find model in registry for local providers
-        model = if provider_instance.local?
-                  begin
-                    Models.find(model_id, provider)
-                  rescue ModelNotFoundError
-                    nil
+          model = if provider_instance.local?
+                    begin
+                      Models.find(model_id, provider)
+                    rescue ModelNotFoundError
+                      nil
+                    end
                   end
-                end
 
-        # Fall back to default model info
-        model ||= Model::Info.default(model_id, provider_instance.slug)
-
-        [model, provider_instance]
-      end
-
-      def resolve_by_lookup(model_id, provider, config)
-        begin
-          model = Models.find(model_id, provider)
-        rescue ModelNotFoundError
-          # Allow raw model IDs for Bedrock and BedrockConverse (they use ARN-style IDs not in registry)
-          if %w[bedrock bedrock_converse].include?(provider.to_s)
-            return create_bedrock_fallback(model_id, provider.to_s, config)
-          end
-
-          raise
+          model ||= Model::Info.default(model_id, provider_instance.slug)
+        else
+          model = Models.find model_id, provider
+          provider_class = Provider.providers[model.provider.to_sym] || raise(Error,
+                                                                              "Unknown provider: #{model.provider}")
+          provider_instance = provider_class.new(config)
         end
-
-        provider_instance = get_provider_instance(model.provider, config)
         [model, provider_instance]
       end
-
-      def create_bedrock_fallback(model_id, provider_name, config)
-        provider_instance = get_provider_instance(provider_name, config)
-        model = Model::Info.default(model_id, provider_instance.slug)
-        [model, provider_instance]
-      end
-
-      def get_provider_instance(provider, config)
-        provider_class = Provider.providers[provider.to_sym]
-        raise Error, "Unknown provider: #{provider}" unless provider_class
-
-        provider_class.new(config)
-      end
-
-      public
 
       def method_missing(method, ...)
         if instance.respond_to?(method)
@@ -157,32 +132,86 @@ module RubyLLM
         instance.respond_to?(method, include_private) || super
       end
 
-      def fetch_from_parsera
-        RubyLLM.logger.info 'Fetching models from Parsera API...'
+      def fetch_models_dev_models(existing_models) # rubocop:disable Metrics/PerceivedComplexity
+        RubyLLM.logger.info 'Fetching models from models.dev API...'
 
         connection = Connection.basic do |f|
           f.request :json
           f.response :json, parser_options: { symbolize_names: true }
         end
-        response = connection.get 'https://api.parsera.org/v1/llm-specs'
-        models = response.body.map { |data| Model::Info.new(data) }
-        models.reject { |model| model.provider.nil? || model.id.nil? }
+        response = connection.get 'https://models.dev/api.json'
+        providers = response.body || {}
+
+        models = providers.flat_map do |provider_key, provider_data|
+          provider_slug = MODELS_DEV_PROVIDER_MAP[provider_key.to_s]
+          next [] unless provider_slug
+
+          (provider_data[:models] || {}).values.map do |model_data|
+            Model::Info.new(models_dev_model_to_info(model_data, provider_slug, provider_key.to_s))
+          end
+        end
+        { models: models.reject { |model| model.provider.nil? || model.id.nil? }, fetched: true }
+      rescue StandardError => e
+        RubyLLM.logger.warn("Failed to fetch models.dev (#{e.class}: #{e.message}). Keeping existing.")
+        {
+          models: existing_models.select { |model| model.metadata[:source] == 'models.dev' },
+          fetched: false
+        }
       end
 
-      def merge_models(provider_models, parsera_models)
-        parsera_by_key = index_by_key(parsera_models)
+      def load_existing_models
+        existing_models = instance&.all
+        existing_models = read_from_json if existing_models.nil? || existing_models.empty?
+        existing_models
+      end
+
+      def log_provider_fetch(provider_fetch)
+        RubyLLM.logger.info "Fetching models from providers: #{provider_fetch[:configured_names].join(', ')}"
+        provider_fetch[:failed].each do |failure|
+          RubyLLM.logger.warn(
+            "Failed to fetch #{failure[:name]} models (#{failure[:error].class}: #{failure[:error].message}). " \
+            'Keeping existing.'
+          )
+        end
+      end
+
+      def log_models_dev_fetch(models_dev_fetch)
+        return if models_dev_fetch[:fetched]
+
+        RubyLLM.logger.warn('Using cached models.dev data due to fetch failure.')
+      end
+
+      def merge_with_existing(existing_models, provider_fetch, models_dev_fetch)
+        existing_by_provider = existing_models.group_by(&:provider)
+        preserved_models = existing_by_provider
+                           .except(*provider_fetch[:fetched_providers])
+                           .values
+                           .flatten
+
+        provider_models = provider_fetch[:models] + preserved_models
+        models_dev_models = if models_dev_fetch[:fetched]
+                              models_dev_fetch[:models]
+                            else
+                              existing_models.select { |model| model.metadata[:source] == 'models.dev' }
+                            end
+
+        merge_models(provider_models, models_dev_models)
+      end
+
+      def merge_models(provider_models, models_dev_models)
+        models_dev_by_key = index_by_key(models_dev_models)
         provider_by_key = index_by_key(provider_models)
 
-        all_keys = parsera_by_key.keys | provider_by_key.keys
+        all_keys = models_dev_by_key.keys | provider_by_key.keys
 
         models = all_keys.map do |key|
-          parsera_model = find_parsera_model(key, parsera_by_key)
+          models_dev_model = find_models_dev_model(key, models_dev_by_key)
           provider_model = provider_by_key[key]
 
-          if parsera_model && provider_model
-            add_provider_metadata(parsera_model, provider_model)
-          elsif parsera_model
-            parsera_model
+          if models_dev_model && provider_model
+            add_provider_metadata(models_dev_model, provider_model)
+          elsif models_dev_model
+            models_dev_model
           else
             provider_model
           end
@@ -191,18 +220,33 @@ module RubyLLM
         models.sort_by { |m| [m.provider, m.id] }
       end
 
-      def find_parsera_model(key, parsera_by_key)
+      def find_models_dev_model(key, models_dev_by_key)
         # Direct match
-        return parsera_by_key[key] if parsera_by_key[key]
+        return models_dev_by_key[key] if models_dev_by_key[key]
+
+        provider, model_id = key.split(':', 2)
+        if provider == 'bedrock'
+          normalized_id = model_id.sub(/^[a-z]{2}\./, '')
+          context_override = nil
+          normalized_id = normalized_id.gsub(/:(\d+)k\b/) do
+            context_override = Regexp.last_match(1).to_i * 1000
+            ''
+          end
+          bedrock_model = models_dev_by_key["bedrock:#{normalized_id}"]
+          if bedrock_model
+            data = bedrock_model.to_h.merge(id: model_id)
+            data[:context_window] = context_override if context_override
+            return Model::Info.new(data)
+          end
+        end
 
         # VertexAI uses same models as Gemini
-        provider, model_id = key.split(':', 2)
         return unless provider == 'vertexai'
 
-        gemini_model = parsera_by_key["gemini:#{model_id}"]
+        gemini_model = models_dev_by_key["gemini:#{model_id}"]
         return unless gemini_model
 
-        # Return Gemini's Parsera data but with VertexAI as provider
+        # Return Gemini's models.dev data but with VertexAI as provider
         Model::Info.new(gemini_model.to_h.merge(provider: 'vertexai'))
       end
 
@@ -212,10 +256,129 @@ module RubyLLM
         end
       end
 
-      def add_provider_metadata(parsera_model, provider_model)
-        data = parsera_model.to_h
+      def add_provider_metadata(models_dev_model, provider_model) # rubocop:disable Metrics/PerceivedComplexity
+        data = models_dev_model.to_h
+        data[:name] = provider_model.name if blank_value?(data[:name])
+        data[:family] = provider_model.family if blank_value?(data[:family])
+        data[:created_at] = provider_model.created_at if blank_value?(data[:created_at])
+        data[:context_window] = provider_model.context_window if blank_value?(data[:context_window])
+        data[:max_output_tokens] = provider_model.max_output_tokens if blank_value?(data[:max_output_tokens])
+        data[:modalities] = provider_model.modalities.to_h if blank_value?(data[:modalities])
+        data[:pricing] = provider_model.pricing.to_h if blank_value?(data[:pricing])
         data[:metadata] = provider_model.metadata.merge(data[:metadata] || {})
+        data[:capabilities] = (models_dev_model.capabilities + provider_model.capabilities).uniq
+        normalize_embedding_modalities(data)
         Model::Info.new(data)
+      end
+
+      def normalize_embedding_modalities(data)
+        return unless data[:id].to_s.include?('embedding')
+
+        modalities = data[:modalities].to_h
+        modalities[:input] = ['text'] if modalities[:input].nil? || modalities[:input].empty?
+        modalities[:output] = ['embeddings']
+        data[:modalities] = modalities
+      end
+
+      def blank_value?(value)
+        return true if value.nil?
+        return value.empty? if value.is_a?(String) || value.is_a?(Array)
+
+        if value.is_a?(Hash)
+          return true if value.empty?
+
+          return value.values.all? { |nested| blank_value?(nested) }
+        end
+
+        false
+      end
+
+      def models_dev_model_to_info(model_data, provider_slug, provider_key)
+        modalities = normalize_models_dev_modalities(model_data[:modalities])
+        capabilities = models_dev_capabilities(model_data, modalities)
+
+        data = {
+          id: model_data[:id],
+          name: model_data[:name] || model_data[:id],
+          provider: provider_slug,
+          family: model_data[:family],
+          created_at: model_data[:release_date] || model_data[:last_updated],
+          context_window: model_data.dig(:limit, :context),
+          max_output_tokens: model_data.dig(:limit, :output),
+          knowledge_cutoff: normalize_models_dev_knowledge(model_data[:knowledge]),
+          modalities: modalities,
+          capabilities: capabilities,
+          pricing: models_dev_pricing(model_data[:cost]),
+          metadata: models_dev_metadata(model_data, provider_key)
+        }
+
+        normalize_embedding_modalities(data)
+        data
+      end
+
+      def models_dev_capabilities(model_data, modalities)
+        capabilities = []
+        capabilities << 'function_calling' if model_data[:tool_call]
+        capabilities << 'structured_output' if model_data[:structured_output]
+        capabilities << 'reasoning' if model_data[:reasoning]
+        capabilities << 'vision' if modalities[:input].intersect?(%w[image video pdf])
+        capabilities.uniq
+      end
+
+      def models_dev_pricing(cost)
+        return {} unless cost
+
+        text_standard = {
+          input_per_million: cost[:input],
+          output_per_million: cost[:output],
+          cached_input_per_million: cost[:cache_read],
+          reasoning_output_per_million: cost[:reasoning]
+        }.compact
+
+        audio_standard = {
+          input_per_million: cost[:input_audio],
+          output_per_million: cost[:output_audio]
+        }.compact
+
+        pricing = {}
+        pricing[:text_tokens] = { standard: text_standard } if text_standard.any?
+        pricing[:audio_tokens] = { standard: audio_standard } if audio_standard.any?
+        pricing
+      end
+
+      def models_dev_metadata(model_data, provider_key)
+        metadata = {
+          source: 'models.dev',
+          provider_id: provider_key,
+          open_weights: model_data[:open_weights],
+          attachment: model_data[:attachment],
+          temperature: model_data[:temperature],
+          last_updated: model_data[:last_updated],
+          status: model_data[:status],
+          interleaved: model_data[:interleaved],
+          cost: model_data[:cost],
+          limit: model_data[:limit],
+          knowledge: model_data[:knowledge]
+        }
+        metadata.compact
+      end
+
+      def normalize_models_dev_modalities(modalities)
+        normalized = { input: [], output: [] }
+        return normalized unless modalities
+
+        normalized[:input] = Array(modalities[:input]).compact
+        normalized[:output] = Array(modalities[:output]).compact
+        normalized
+      end
+
+      def normalize_models_dev_knowledge(value)
+        return if value.nil?
+        return value if value.is_a?(Date)
+
+        Date.parse(value.to_s)
+      rescue ArgumentError
+        nil
       end
     end
 
@@ -283,9 +446,24 @@ module RubyLLM
 
     def find_with_provider(model_id, provider)
       resolved_id = Aliases.resolve(model_id, provider)
+      resolved_id = resolve_bedrock_region_id(resolved_id) if provider.to_s == 'bedrock'
       all.find { |m| m.id == model_id && m.provider == provider.to_s } ||
         all.find { |m| m.id == resolved_id && m.provider == provider.to_s } ||
         raise(ModelNotFoundError, "Unknown model: #{model_id} for provider: #{provider}")
+    end
+
+    def resolve_bedrock_region_id(model_id)
+      region = RubyLLM.config.bedrock_region.to_s
+      return model_id if region.empty?
+
+      candidate_id = Providers::Bedrock::Models.with_region_prefix(model_id, region)
+      return model_id if candidate_id == model_id
+
+      candidate = all.find { |m| m.provider == 'bedrock' && m.id == candidate_id }
+      return model_id unless candidate
+
+      inference_types = Array(candidate.metadata[:inference_types] || candidate.metadata['inference_types'])
+      Providers::Bedrock::Models.normalize_inference_profile_id(model_id, inference_types, region)
     end
 
     def find_without_provider(model_id)

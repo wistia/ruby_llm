@@ -20,6 +20,7 @@ module RubyLLM
                   :bedrock_region,
                   :bedrock_session_token,
                   :openrouter_api_key,
+                  :xai_api_key,
                   :ollama_api_base,
                   :gpustack_api_base,
                   :gpustack_api_key,
@@ -56,7 +57,7 @@ module RubyLLM
       @retry_interval_randomness = 0.5
       @http_proxy = nil
 
-      @default_model = 'gpt-4.1-nano'
+      @default_model = 'gpt-5-nano'
       @default_embedding_model = 'text-embedding-3-small'
       @default_moderation_model = 'omni-moderation-latest'
       @default_image_model = 'gpt-image-1'
@@ -74,15 +75,5 @@ module RubyLLM
     def instance_variables
       super.reject { |ivar| ivar.to_s.match?(/_id|_key|_secret|_token$/) }
     end
-
-    # Aliases for bedrock_converse provider (shares credentials with bedrock)
-    alias bedrock_converse_api_key bedrock_api_key
-    alias bedrock_converse_api_key= bedrock_api_key=
-    alias bedrock_converse_secret_key bedrock_secret_key
-    alias bedrock_converse_secret_key= bedrock_secret_key=
-    alias bedrock_converse_region bedrock_region
-    alias bedrock_converse_region= bedrock_region=
-    alias bedrock_converse_session_token bedrock_session_token
-    alias bedrock_converse_session_token= bedrock_session_token=
   end
 end
