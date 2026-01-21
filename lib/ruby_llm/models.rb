@@ -135,8 +135,8 @@ module RubyLLM
           begin
             model = Models.find model_id, provider
           rescue ModelNotFoundError
-            # Allow raw model IDs for Bedrock and BedrockConverse (they use ARN-style IDs not in registry)
-            if %w[bedrock bedrock_converse].include?(provider.to_s)
+            # Allow raw model IDs for BedrockConverse (they use ARN-style IDs not in registry)
+            if %w[bedrock_converse].include?(provider.to_s)
               provider_class = Provider.providers[provider.to_sym]
               provider_instance = provider_class.new(config)
               model = Model::Info.default(model_id, provider_instance.slug)
