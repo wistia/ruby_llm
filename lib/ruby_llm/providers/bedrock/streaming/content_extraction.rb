@@ -7,70 +7,118 @@ module RubyLLM
         # Module for handling content extraction from AWS Bedrock streaming responses.
         module ContentExtraction
           def json_delta?(data)
-            # Converse Stream format for tool input delta
-            data['delta'] && data.dig('delta', 'toolUse')
+            data['type'] == 'content_block_delta' && data.dig('delta', 'type') == 'input_json_delta'
           end
 
           def extract_streaming_content(data)
             return '' unless data.is_a?(Hash)
 
-            # Converse Stream format: text is in delta.text
-            return data.dig('delta', 'text').to_s if data['delta'] && data['delta']['text']
-
-            ''
+            extract_content_by_type(data)
           end
 
-          def extract_tool_calls(data)
-            # Extract tool calls from Converse Stream format
-            # Tool use starts in 'start' block, then deltas come in 'delta' block
-            tool_use_start = data.dig('start', 'toolUse')
-            tool_use_delta = data.dig('delta', 'toolUse')
+          def extract_thinking_delta(data)
+            return nil unless data.is_a?(Hash)
 
-
-            return nil unless tool_use_start || tool_use_delta
-
-            if tool_use_start
-              # Initial tool use block with metadata
-              tool_calls = {
-                tool_use_start['toolUseId'] => ToolCall.new(
-                  id: tool_use_start['toolUseId'],
-                  name: tool_use_start['name'],
-                  arguments: +''
-                )
-              }
-              tool_calls
-            elsif tool_use_delta
-              # Delta with input arguments (no id/name in delta)
-              tool_calls = {
-                nil => ToolCall.new(
-                  id: nil,
-                  name: nil,
-                  arguments: tool_use_delta['input'] || ''
-                )
-              }
-              tool_calls
+            if data['type'] == 'content_block_delta' && data.dig('delta', 'type') == 'thinking_delta'
+              return data.dig('delta', 'thinking')
             end
-          end
 
-          def extract_model_id(data)
-            @model_id
-          end
+            if data['type'] == 'content_block_start' && data.dig('content_block', 'type') == 'thinking'
+              return data.dig('content_block', 'thinking') || data.dig('content_block', 'text')
+            end
 
-          def extract_input_tokens(data)
-            data.dig('usage', 'inputTokens')
-          end
-
-          def extract_output_tokens(data)
-            data.dig('usage', 'outputTokens')
-          end
-
-          def extract_cached_tokens(data)
-            # Converse API doesn't expose cache metrics in the same way
             nil
           end
 
+          def extract_signature_delta(data)
+            return nil unless data.is_a?(Hash)
+
+            signature = extract_signature_from_delta(data)
+            return signature if signature
+
+            return nil unless data['type'] == 'content_block_start'
+
+            extract_signature_from_block(data['content_block'])
+          end
+
+          def extract_tool_calls(data)
+            data.dig('message', 'tool_calls') || data['tool_calls']
+          end
+
+          def extract_model_id(data)
+            data.dig('message', 'model') || @model_id
+          end
+
+          def extract_input_tokens(data)
+            data.dig('message', 'usage', 'input_tokens')
+          end
+
+          def extract_output_tokens(data)
+            data.dig('message', 'usage', 'output_tokens') || data.dig('usage', 'output_tokens')
+          end
+
+          def extract_cached_tokens(data)
+            data.dig('message', 'usage', 'cache_read_input_tokens') || data.dig('usage', 'cache_read_input_tokens')
+          end
+
           def extract_cache_creation_tokens(data)
-            # Converse API doesn't expose cache metrics in the same way
+            direct = data.dig('message', 'usage',
+                              'cache_creation_input_tokens') || data.dig('usage', 'cache_creation_input_tokens')
+            return direct if direct
+
+            breakdown = data.dig('message', 'usage', 'cache_creation') || data.dig('usage', 'cache_creation')
+            return unless breakdown.is_a?(Hash)
+
+            breakdown.values.compact.sum
+          end
+
+          def extract_thinking_tokens(data)
+            data.dig('message', 'usage', 'thinking_tokens') ||
+              data.dig('message', 'usage', 'output_tokens_details', 'thinking_tokens') ||
+              data.dig('usage', 'thinking_tokens') ||
+              data.dig('usage', 'output_tokens_details', 'thinking_tokens') ||
+              data.dig('message', 'usage', 'reasoning_tokens') ||
+              data.dig('message', 'usage', 'output_tokens_details', 'reasoning_tokens') ||
+              data.dig('usage', 'reasoning_tokens') ||
+              data.dig('usage', 'output_tokens_details', 'reasoning_tokens')
+          end
+
+          private
+
+          def extract_content_by_type(data)
+            case data['type']
+            when 'content_block_start' then extract_block_start_content(data)
+            when 'content_block_delta' then extract_delta_content(data)
+            else ''
+            end
+          end
+
+          def extract_block_start_content(data)
+            content_block = data['content_block'] || {}
+            return '' if %w[thinking redacted_thinking].include?(content_block['type'])
+
+            content_block['text'].to_s
+          end
+
+          def extract_delta_content(data)
+            delta = data['delta'] || {}
+            return '' if %w[thinking_delta signature_delta].include?(delta['type'])
+
+            delta['text'].to_s
+          end
+
+          def extract_signature_from_delta(data)
+            return unless data['type'] == 'content_block_delta'
+            return unless data.dig('delta', 'type') == 'signature_delta'
+
+            data.dig('delta', 'signature')
+          end
+
+          def extract_signature_from_block(content_block)
+            block = content_block || {}
+            return block['signature'] if block['type'] == 'thinking' && block['signature']
+            return block['data'] if block['type'] == 'redacted_thinking'
+
             nil
           end
         end
