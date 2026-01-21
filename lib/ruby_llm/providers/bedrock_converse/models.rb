@@ -8,23 +8,11 @@ module RubyLLM
       # Models methods for the AWS Bedrock Converse API implementation
       module Models
         def list_models
-          mgmt_api_base = "https://bedrock.#{@config.bedrock_region}.amazonaws.com"
-          full_models_url = "#{mgmt_api_base}/#{models_url}"
-          signature = sign_request(full_models_url, method: :get)
-
-          # Create a direct connection for the models API (different base URL than runtime API)
-          models_connection = Faraday.new(mgmt_api_base) do |faraday|
-            faraday.request :json
-            faraday.response :json
-            faraday.use :llm_errors, provider: self
-            faraday.adapter :net_http
-          end
-
-          response = models_connection.get(models_url) do |req|
-            req.headers.merge! signature.headers
-          end
-
-          parse_list_models_response(response, slug, capabilities)
+          # BedrockConverse uses the same foundation models as Bedrock.
+          # Return empty array to avoid duplicate API calls - models are already
+          # fetched by the Bedrock provider. BedrockConverse handles arbitrary
+          # model IDs gracefully via Model::Info.default in Models.resolve.
+          []
         end
 
         module_function

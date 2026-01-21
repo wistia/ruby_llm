@@ -158,8 +158,14 @@ module RubyLLM
           ['bedrock_converse', parts[2..].join('/')]
         elsif parts.length >= 2 && parts[0] == 'bedrock_converse'
           ['bedrock_converse', parts[1..].join('/')]
+        elsif provider.nil?
+          # Only infer provider from model_id if not already specified
+          # This handles formats like "openai/gpt-4" when no provider is given
+          [parts.first, parts[1..].join('/')]
         else
-          [provider || parts.first, parts[1..].join('/')]
+          # Provider is already specified, keep the model_id as-is
+          # This preserves openrouter model IDs like "anthropic/claude-haiku-4.5"
+          [provider, model_id]
         end
       end
 

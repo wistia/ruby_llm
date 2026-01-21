@@ -76,7 +76,7 @@ RSpec.describe RubyLLM::Chat do
           end
 
           it "#{provider}/#{model} supports handling streaming error events" do
-            skip 'Bedrock uses AWS Event Stream format, not SSE events' if provider == :bedrock
+            skip 'Bedrock uses AWS Event Stream format, not SSE events' if provider.in?(%i[bedrock bedrock_converse])
 
             # Testing if error handling is now implemented
 
@@ -112,7 +112,7 @@ RSpec.describe RubyLLM::Chat do
           end
 
           it "#{provider}/#{model} supports handling streaming error events" do
-            skip 'Bedrock uses AWS Event Stream format, not SSE events' if provider == :bedrock
+            skip 'Bedrock uses AWS Event Stream format, not SSE events' if provider.in?(%i[bedrock bedrock_converse])
 
             # Testing if error handling is now implemented
 
