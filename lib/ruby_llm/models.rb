@@ -105,6 +105,10 @@ module RubyLLM
 
       def resolve(model_id, provider: nil, assume_exists: false, config: nil) # rubocop:disable Metrics/PerceivedComplexity
         config ||= RubyLLM.config
+
+        # Handle bedrock/converse/model-id format
+        provider, model_id = parse_bedrock_converse_format(model_id, provider)
+
         provider_class = provider ? Provider.providers[provider.to_sym] : nil
 
         if provider_class
@@ -128,12 +132,36 @@ module RubyLLM
 
           model ||= Model::Info.default(model_id, provider_instance.slug)
         else
-          model = Models.find model_id, provider
+          begin
+            model = Models.find model_id, provider
+          rescue ModelNotFoundError
+            # Allow raw model IDs for Bedrock and BedrockConverse (they use ARN-style IDs not in registry)
+            if %w[bedrock bedrock_converse].include?(provider.to_s)
+              provider_class = Provider.providers[provider.to_sym]
+              provider_instance = provider_class.new(config)
+              model = Model::Info.default(model_id, provider_instance.slug)
+              return [model, provider_instance]
+            end
+            raise
+          end
           provider_class = Provider.providers[model.provider.to_sym] || raise(Error,
                                                                               "Unknown provider: #{model.provider}")
           provider_instance = provider_class.new(config)
         end
         [model, provider_instance]
+      end
+
+      def parse_bedrock_converse_format(model_id, provider)
+        return [provider, model_id] unless model_id.include?('/')
+
+        parts = model_id.split('/')
+        if parts.length >= 2 && parts[0] == 'bedrock' && parts[1] == 'converse'
+          ['bedrock_converse', parts[2..].join('/')]
+        elsif parts.length >= 2 && parts[0] == 'bedrock_converse'
+          ['bedrock_converse', parts[1..].join('/')]
+        else
+          [provider || parts.first, parts[1..].join('/')]
+        end
       end
 
       def method_missing(method, ...)
