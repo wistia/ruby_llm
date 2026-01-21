@@ -11,6 +11,7 @@ chat_models = [
   { provider: :anthropic, model: 'claude-haiku-4-5' },
   { provider: :azure, model: 'Kimi-K2.5' },
   { provider: :bedrock, model: 'claude-3-5-haiku' },
+  { provider: :bedrock_converse, model: 'us.anthropic.claude-haiku-4-5-20251001-v1:0' },
   { provider: :deepseek, model: 'deepseek-chat' },
   { provider: :gemini, model: 'gemini-2.5-flash' },
   { provider: :gpustack, model: 'qwen3' },
@@ -44,6 +45,7 @@ THINKING_MODELS = filter_local_providers(thinking_models).freeze
 PDF_MODELS = [
   { provider: :anthropic, model: 'claude-haiku-4-5' },
   { provider: :bedrock, model: 'claude-3-7-sonnet' },
+  { provider: :bedrock_converse, model: 'us.anthropic.claude-haiku-4-5-20251001-v1:0' },
   { provider: :gemini, model: 'gemini-2.5-flash' },
   { provider: :openai, model: 'gpt-5-nano' },
   { provider: :openrouter, model: 'gemini-2.5-flash' },
@@ -54,6 +56,7 @@ vision_models = [
   { provider: :anthropic, model: 'claude-haiku-4-5' },
   { provider: :azure, model: 'Kimi-K2.5' },
   { provider: :bedrock, model: 'claude-sonnet-4-5' },
+  { provider: :bedrock_converse, model: 'us.anthropic.claude-haiku-4-5-20251001-v1:0' },
   { provider: :gemini, model: 'gemini-2.5-flash' },
   { provider: :mistral, model: 'pixtral-12b' },
   { provider: :ollama, model: 'granite3.2-vision' },

@@ -1,0 +1,51 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"Call the array params
+        tool with tags [\"red\",\"blue\"] and tell me the combined tags."}]}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"array_params","description":"Uses
+        params DSL array support","inputSchema":{"json":{"type":"object","properties":{"tags":{"type":"array","description":"List
+        of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false,"strict":true}}}}]}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Host:
+      - bedrock-runtime.<AWS_REGION>.amazonaws.com
+      X-Amz-Date:
+      - 20251205T064512Z
+      X-Amz-Security-Token:
+      - "<AWS_SESSION_TOKEN>"
+      X-Amz-Content-Sha256:
+      - e326d819c847a99182fe9b1451fb45fcd545e23218e8c9b186eeff6a7fbe1848
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20251205/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=ea54bd1b7129fc107a46a0a86cbbaae778482a03c61ab2c824a02c74604b9844
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 05 Dec 2025 06:45:13 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '433'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - b90c23b8-fa7f-466c-8b81-62f7d4c298e3
+    body:
+      encoding: UTF-8
+      string: '{"metrics":{"latencyMs":818},"output":{"message":{"content":[{"toolUse":{"input":{"tags":["red","blue"]},"name":"array_params","toolUseId":"tooluse_i3rnjlGCRte3a0JlAJguGA","type":"tool_use"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":608,"outputTokens":59,"serverToolUsage":{},"totalTokens":667}}'
+  recorded_at: Fri, 05 Dec 2025 06:45:13 GMT
+recorded_with: VCR 6.3.1
