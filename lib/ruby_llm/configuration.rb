@@ -75,5 +75,15 @@ module RubyLLM
     def instance_variables
       super.reject { |ivar| ivar.to_s.match?(/_id|_key|_secret|_token$/) }
     end
+
+    # Aliases for bedrock_converse provider (shares credentials with bedrock)
+    alias bedrock_converse_api_key bedrock_api_key
+    alias bedrock_converse_api_key= bedrock_api_key=
+    alias bedrock_converse_secret_key bedrock_secret_key
+    alias bedrock_converse_secret_key= bedrock_secret_key=
+    alias bedrock_converse_region bedrock_region
+    alias bedrock_converse_region= bedrock_region=
+    alias bedrock_converse_session_token bedrock_session_token
+    alias bedrock_converse_session_token= bedrock_session_token=
   end
 end

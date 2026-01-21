@@ -16,6 +16,7 @@ loader.inflector.inflect(
   'UI' => 'UI',
   'api' => 'API',
   'bedrock' => 'Bedrock',
+  'bedrock_converse' => 'BedrockConverse',
   'deepseek' => 'DeepSeek',
   'gpustack' => 'GPUStack',
   'llm' => 'LLM',
@@ -92,6 +93,7 @@ end
 
 RubyLLM::Provider.register :anthropic, RubyLLM::Providers::Anthropic
 RubyLLM::Provider.register :bedrock, RubyLLM::Providers::Bedrock
+RubyLLM::Provider.register :bedrock_converse, RubyLLM::Providers::BedrockConverse
 RubyLLM::Provider.register :deepseek, RubyLLM::Providers::DeepSeek
 RubyLLM::Provider.register :gemini, RubyLLM::Providers::Gemini
 RubyLLM::Provider.register :gpustack, RubyLLM::Providers::GPUStack
