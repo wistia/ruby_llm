@@ -342,7 +342,22 @@ RSpec.describe RubyLLM::Providers::BedrockConverse::Chat do
 
       result = chat_instance.send(:build_converse_system_content, [message])
 
-      expect(result.first[:text]).to include('raw system prompt')
+      expect(result).to eq([{ text: 'raw system prompt' }])
+    end
+
+    it 'preserves cachePoint blocks in raw content' do
+      raw_content = RubyLLM::Content::Raw.new([
+        { text: 'system prompt' },
+        { cachePoint: { type: 'default', ttl: '5m' } }
+      ])
+      message = RubyLLM::Message.new(role: :system, content: raw_content)
+
+      result = chat_instance.send(:build_converse_system_content, [message])
+
+      expect(result).to eq([
+                             { text: 'system prompt' },
+                             { cachePoint: { type: 'default', ttl: '5m' } }
+                           ])
     end
   end
 
@@ -598,6 +613,50 @@ RSpec.describe RubyLLM::Providers::BedrockConverse::Chat do
 
       expect(message.input_tokens).to be_nil
       expect(message.output_tokens).to be_nil
+    end
+
+    it 'extracts cache metrics from response' do
+      response_body = {
+        'output' => {
+          'message' => {
+            'content' => [{ 'text' => 'Response' }]
+          }
+        },
+        'usage' => {
+          'inputTokens' => 100,
+          'outputTokens' => 50,
+          'cacheReadInputTokenCount' => 80,
+          'cacheWriteInputTokenCount' => 20
+        }
+      }
+      response = instance_double(Faraday::Response, body: response_body)
+
+      message = chat_instance.send(:parse_converse_response, response)
+
+      expect(message.input_tokens).to eq(100)
+      expect(message.output_tokens).to eq(50)
+      expect(message.cached_tokens).to eq(80)
+      expect(message.cache_creation_tokens).to eq(20)
+    end
+
+    it 'handles missing cache metrics' do
+      response_body = {
+        'output' => {
+          'message' => {
+            'content' => [{ 'text' => 'Response' }]
+          }
+        },
+        'usage' => {
+          'inputTokens' => 100,
+          'outputTokens' => 50
+        }
+      }
+      response = instance_double(Faraday::Response, body: response_body)
+
+      message = chat_instance.send(:parse_converse_response, response)
+
+      expect(message.cached_tokens).to be_nil
+      expect(message.cache_creation_tokens).to be_nil
     end
   end
 

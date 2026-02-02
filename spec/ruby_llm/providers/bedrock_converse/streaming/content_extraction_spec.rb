@@ -328,10 +328,28 @@ RSpec.describe RubyLLM::Providers::BedrockConverse::Streaming::ContentExtraction
   end
 
   describe '#extract_cached_tokens' do
-    it 'returns nil (not supported in Converse API)' do
+    it 'extracts cacheReadInputTokenCount from usage' do
       data = {
         'usage' => {
-          'cachedTokens' => 100
+          'cacheReadInputTokenCount' => 100
+        }
+      }
+
+      result = extractor.extract_cached_tokens(data)
+
+      expect(result).to eq(100)
+    end
+
+    it 'returns nil when usage is missing' do
+      result = extractor.extract_cached_tokens({})
+
+      expect(result).to be_nil
+    end
+
+    it 'returns nil when cacheReadInputTokenCount is missing' do
+      data = {
+        'usage' => {
+          'inputTokens' => 50
         }
       }
 
@@ -340,18 +358,42 @@ RSpec.describe RubyLLM::Providers::BedrockConverse::Streaming::ContentExtraction
       expect(result).to be_nil
     end
 
-    it 'returns nil for any data' do
-      result = extractor.extract_cached_tokens({})
+    it 'handles zero tokens' do
+      data = {
+        'usage' => {
+          'cacheReadInputTokenCount' => 0
+        }
+      }
 
-      expect(result).to be_nil
+      result = extractor.extract_cached_tokens(data)
+
+      expect(result).to eq(0)
     end
   end
 
   describe '#extract_cache_creation_tokens' do
-    it 'returns nil (not supported in Converse API)' do
+    it 'extracts cacheWriteInputTokenCount from usage' do
       data = {
         'usage' => {
-          'cacheCreationTokens' => 50
+          'cacheWriteInputTokenCount' => 50
+        }
+      }
+
+      result = extractor.extract_cache_creation_tokens(data)
+
+      expect(result).to eq(50)
+    end
+
+    it 'returns nil when usage is missing' do
+      result = extractor.extract_cache_creation_tokens({})
+
+      expect(result).to be_nil
+    end
+
+    it 'returns nil when cacheWriteInputTokenCount is missing' do
+      data = {
+        'usage' => {
+          'inputTokens' => 50
         }
       }
 
@@ -360,10 +402,16 @@ RSpec.describe RubyLLM::Providers::BedrockConverse::Streaming::ContentExtraction
       expect(result).to be_nil
     end
 
-    it 'returns nil for any data' do
-      result = extractor.extract_cache_creation_tokens({})
+    it 'handles zero tokens' do
+      data = {
+        'usage' => {
+          'cacheWriteInputTokenCount' => 0
+        }
+      }
 
-      expect(result).to be_nil
+      result = extractor.extract_cache_creation_tokens(data)
+
+      expect(result).to eq(0)
     end
   end
 
