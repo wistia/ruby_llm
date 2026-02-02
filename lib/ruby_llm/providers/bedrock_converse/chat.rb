@@ -232,7 +232,8 @@ module RubyLLM
             content = msg.content
 
             if content.is_a?(RubyLLM::Content::Raw)
-              [{ text: content.value.to_s }]
+              # Preserve Raw content (e.g., with cachePoint blocks) as-is
+              Array(content.value)
             else
               [{ text: Media.format_content(msg.content).map { |c| c[:text] || c.to_s }.join }]
             end
@@ -304,6 +305,8 @@ module RubyLLM
             tool_calls: parse_converse_tool_calls(tool_use_blocks),
             input_tokens: usage['inputTokens'],
             output_tokens: usage['outputTokens'],
+            cached_tokens: usage['cacheReadInputTokenCount'],
+            cache_creation_tokens: usage['cacheWriteInputTokenCount'],
             model_id: @model_id,
             raw: response
           )

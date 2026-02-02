@@ -80,3 +80,5 @@ module RubyLLM
     end
   end
 end
+
+require_relative 'bedrock_converse/content'

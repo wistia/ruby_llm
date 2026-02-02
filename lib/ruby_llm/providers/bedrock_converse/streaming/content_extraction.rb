@@ -65,13 +65,11 @@ module RubyLLM
           end
 
           def extract_cached_tokens(data)
-            # Converse API doesn't expose cache metrics in the same way
-            nil
+            data.dig('usage', 'cacheReadInputTokenCount')
           end
 
           def extract_cache_creation_tokens(data)
-            # Converse API doesn't expose cache metrics in the same way
-            nil
+            data.dig('usage', 'cacheWriteInputTokenCount')
           end
         end
       end
