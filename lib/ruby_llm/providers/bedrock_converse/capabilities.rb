@@ -255,6 +255,7 @@ module RubyLLM
           /\.claude-3-haiku-/ => :claude3_haiku,
           # Claude 4.5 models (must come before Claude 4.x patterns)
           /\.claude-sonnet-4-5-/ => :claude4_5_sonnet,
+          /\.claude-opus-4-6-/ => :claude4_5_opus,
           /\.claude-opus-4-5-/ => :claude4_5_opus,
           /\.claude-haiku-4-5-/ => :claude4_5_haiku,
           # Claude 4.1 models (must come before Claude 4.x patterns)

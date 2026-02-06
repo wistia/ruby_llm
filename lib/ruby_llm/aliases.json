@@ -57,6 +57,10 @@
     "bedrock": "anthropic.claude-opus-4-1-20250805-v1:0",
     "azure": "claude-opus-4-1-20250805"
   },
+  "claude-opus-4-6": {
+    "openrouter": "anthropic/claude-opus-4.6",
+    "bedrock": "anthropic.claude-opus-4-6-v1"
+  },
   "claude-opus-4-5": {
     "anthropic": "claude-opus-4-5-20251101",
     "openrouter": "anthropic/claude-opus-4.5",

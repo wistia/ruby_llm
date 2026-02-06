@@ -169,7 +169,7 @@ models:
   anthropic_latest: "claude-sonnet-4-5"
   anthropic_current: "claude-sonnet-4-5"
   anthropic_newest: "claude-sonnet-4-5"
-  anthropic_opus: "claude-opus-4-5"
+  anthropic_opus: "claude-opus-4-6"
 
   # Google models
   gemini_latest: "gemini-2.5-pro"
