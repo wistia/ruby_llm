@@ -18,11 +18,17 @@ module RubyLLM
           end
 
           def stream_response(connection, payload, additional_headers = {}, &block)
-            signature = sign_request("#{connection.connection.url_prefix}#{stream_url}", payload:)
+            signature_headers = if use_bearer_token?
+                                  {}
+                                else
+                                  signature = sign_request("#{connection.connection.url_prefix}#{stream_url}", payload:)
+                                  signature.headers
+                                end
+
             accumulator = StreamAccumulator.new
 
             response = connection.post stream_url, payload do |req|
-              req.headers.merge! build_headers(signature.headers, streaming: block_given?)
+              req.headers.merge! build_headers(signature_headers, streaming: block_given?)
               # Merge additional headers, with existing headers taking precedence
               req.headers = additional_headers.merge(req.headers) unless additional_headers.empty?
               req.options.on_data = handle_stream do |chunk|

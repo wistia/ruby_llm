@@ -22,6 +22,7 @@ module RubyLLM
                   :bedrock_secret_key,
                   :bedrock_region,
                   :bedrock_session_token,
+                  :bedrock_bearer_token,
                   :openrouter_api_key,
                   :xai_api_key,
                   :ollama_api_base,
@@ -88,5 +89,7 @@ module RubyLLM
     alias bedrock_converse_region= bedrock_region=
     alias bedrock_converse_session_token bedrock_session_token
     alias bedrock_converse_session_token= bedrock_session_token=
+    alias bedrock_converse_bearer_token bedrock_bearer_token
+    alias bedrock_converse_bearer_token= bedrock_bearer_token=
   end
 end
