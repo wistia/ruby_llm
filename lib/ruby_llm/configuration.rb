@@ -87,5 +87,7 @@ module RubyLLM
     alias bedrock_converse_region= bedrock_region=
     alias bedrock_converse_session_token bedrock_session_token
     alias bedrock_converse_session_token= bedrock_session_token=
+    alias bedrock_converse_bearer_token bedrock_bearer_token
+    alias bedrock_converse_bearer_token= bedrock_bearer_token=
   end
 end

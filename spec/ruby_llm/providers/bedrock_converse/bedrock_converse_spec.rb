@@ -516,4 +516,103 @@ RSpec.describe RubyLLM::Providers::BedrockConverse do
       expect(described_class.configuration_requirements.length).to eq(3)
     end
   end
+
+  describe 'bearer token authentication' do
+    describe '#use_bearer_token?' do
+      it 'returns false when bearer token is nil' do
+        config = RubyLLM::Configuration.new
+        config.bedrock_api_key = 'key'
+        config.bedrock_secret_key = 'secret'
+        config.bedrock_region = 'us-east-1'
+        config.bedrock_bearer_token = nil
+        instance = described_class.new(config)
+
+        expect(instance.use_bearer_token?).to be false
+      end
+
+      it 'returns false when bearer token is empty string' do
+        config = RubyLLM::Configuration.new
+        config.bedrock_api_key = 'key'
+        config.bedrock_secret_key = 'secret'
+        config.bedrock_region = 'us-east-1'
+        config.bedrock_bearer_token = ''
+        instance = described_class.new(config)
+
+        expect(instance.use_bearer_token?).to be false
+      end
+
+      it 'returns true when bearer token is set' do
+        config = RubyLLM::Configuration.new
+        config.bedrock_region = 'us-east-1'
+        config.bedrock_bearer_token = 'test-bearer-token-12345'
+        instance = described_class.new(config)
+
+        expect(instance.use_bearer_token?).to be true
+      end
+    end
+
+    describe '#build_headers with bearer token' do
+      let(:bearer_token_config) do
+        config = RubyLLM::Configuration.new
+        config.bedrock_region = 'us-east-1'
+        config.bedrock_bearer_token = 'test-bearer-token-12345'
+        config
+      end
+
+      let(:bearer_token_instance) do
+        described_class.new(bearer_token_config)
+      end
+
+      it 'includes bearer token in Authorization header' do
+        headers = bearer_token_instance.build_headers({}, streaming: false)
+
+        expect(headers['Authorization']).to eq('Bearer test-bearer-token-12345')
+      end
+
+      it 'does not include SigV4 signature headers when bearer token is used' do
+        sig_headers = {
+          'Authorization' => 'AWS4-HMAC-SHA256 Credential=...',
+          'X-Amz-Date' => '20231201T120000Z',
+          'X-Amz-Security-Token' => 'token123'
+        }
+
+        headers = bearer_token_instance.build_headers(sig_headers, streaming: false)
+
+        # Should use bearer token, not SigV4
+        expect(headers['Authorization']).to eq('Bearer test-bearer-token-12345')
+        expect(headers['X-Amz-Date']).to be_nil
+        expect(headers['X-Amz-Security-Token']).to be_nil
+      end
+
+      it 'includes correct Content-Type and Accept headers' do
+        headers = bearer_token_instance.build_headers({}, streaming: false)
+
+        expect(headers['Content-Type']).to eq('application/json')
+        expect(headers['Accept']).to eq('application/json')
+      end
+
+      it 'uses eventstream Accept header for streaming requests' do
+        headers = bearer_token_instance.build_headers({}, streaming: true)
+
+        expect(headers['Accept']).to eq('application/vnd.amazon.eventstream')
+        expect(headers['Authorization']).to eq('Bearer test-bearer-token-12345')
+      end
+    end
+
+    describe 'configuration aliases' do
+      it 'bedrock_converse_bearer_token aliases bedrock_bearer_token' do
+        config = RubyLLM::Configuration.new
+        config.bedrock_bearer_token = 'token-via-bedrock'
+
+        expect(config.bedrock_converse_bearer_token).to eq('token-via-bedrock')
+      end
+
+      it 'bedrock_converse_bearer_token= aliases bedrock_bearer_token=' do
+        config = RubyLLM::Configuration.new
+        config.bedrock_converse_bearer_token = 'token-via-converse'
+
+        expect(config.bedrock_bearer_token).to eq('token-via-converse')
+      end
+    end
+  end
 end
