@@ -7,12 +7,18 @@ module RubyLLM
       module Capabilities
         module_function
 
-        def determine_context_window(_model_id)
-          200_000
+        def determine_context_window(model_id)
+          case model_id
+          when /claude-opus-4-6/ then 1_000_000
+          else 200_000
+          end
         end
 
         def determine_max_tokens(model_id)
           case model_id
+          when /claude-opus-4-6/ then 128_000
+          when /claude-opus-4-5/, /claude-haiku-4-5/, /claude-sonnet-4-5/, /claude-sonnet-4/ then 64_000
+          when /claude-opus-4/ then 32_000
           when /claude-3-7-sonnet/, /claude-3-5/ then 8_192
           else 4_096
           end
@@ -31,19 +37,24 @@ module RubyLLM
         end
 
         def supports_functions?(model_id)
-          model_id.match?(/claude-3/)
+          model_id.match?(/claude-3|claude-(?:opus|sonnet|haiku)-4/)
         end
 
         def supports_json_mode?(model_id)
-          model_id.match?(/claude-3/)
+          model_id.match?(/claude-3|claude-(?:opus|sonnet|haiku)-4/)
         end
 
         def supports_extended_thinking?(model_id)
-          model_id.match?(/claude-3-7-sonnet/)
+          model_id.match?(/claude-3-7-sonnet|claude-(?:opus|sonnet|haiku)-4/)
         end
 
         def model_family(model_id)
           case model_id
+          when /claude-opus-4-6/    then 'claude-opus-4-6'
+          when /claude-opus-4-5/    then 'claude-opus-4-5'
+          when /claude-opus-4/      then 'claude-opus-4'
+          when /claude-sonnet-4/    then 'claude-sonnet-4'
+          when /claude-haiku-4-5/   then 'claude-haiku-4-5'
           when /claude-3-7-sonnet/  then 'claude-3-7-sonnet'
           when /claude-3-5-sonnet/  then 'claude-3-5-sonnet'
           when /claude-3-5-haiku/   then 'claude-3-5-haiku'
@@ -59,6 +70,11 @@ module RubyLLM
         end
 
         PRICES = {
+          'claude-opus-4-6': { input: 5.0, output: 25.0 },
+          'claude-opus-4-5': { input: 5.0, output: 25.0 },
+          'claude-opus-4': { input: 15.0, output: 75.0 },
+          'claude-sonnet-4': { input: 3.0, output: 15.0 },
+          'claude-haiku-4-5': { input: 1.0, output: 5.0 },
           'claude-3-7-sonnet': { input: 3.0, output: 15.0 },
           'claude-3-5-sonnet': { input: 3.0, output: 15.0 },
           'claude-3-5-haiku': { input: 0.80, output: 4.0 },
@@ -92,13 +108,13 @@ module RubyLLM
         def capabilities_for(model_id)
           capabilities = ['streaming']
 
-          if model_id.match?(/claude-3/)
+          if model_id.match?(/claude-3|claude-(?:opus|sonnet|haiku)-4/)
             capabilities << 'function_calling'
             capabilities << 'batch'
           end
 
-          capabilities << 'reasoning' if model_id.match?(/claude-3-7|-4/)
-          capabilities << 'citations' if model_id.match?(/claude-3\.5|claude-3-7/)
+          capabilities << 'reasoning' if model_id.match?(/claude-3-7-sonnet|claude-(?:opus|sonnet|haiku)-4/)
+          capabilities << 'citations' if model_id.match?(/claude-3-5|claude-3-7|claude-(?:opus|sonnet|haiku)-4/)
           capabilities
         end
 
@@ -116,7 +132,7 @@ module RubyLLM
             output_per_million: prices[:output] * 0.5
           }
 
-          if model_id.match?(/claude-3-7/)
+          if supports_extended_thinking?(model_id)
             standard_pricing[:reasoning_output_per_million] = prices[:output] * 2.5
             batch_pricing[:reasoning_output_per_million] = prices[:output] * 1.25
           end
