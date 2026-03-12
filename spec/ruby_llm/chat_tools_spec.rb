@@ -674,7 +674,7 @@ RSpec.describe RubyLLM::Chat do
         provider_class = provider ? RubyLLM::Provider.providers[provider.to_sym] : nil
         skip "#{provider} doesn't support tool choice" unless provider_class&.capabilities&.supports_tool_choice?(model)
 
-        skip "Bedrock doesn't support :none tool choice" if provider == :bedrock
+        skip "Bedrock doesn't support :none tool choice" if %i[bedrock bedrock_converse].include?(provider)
 
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(Weather, choice: :none)

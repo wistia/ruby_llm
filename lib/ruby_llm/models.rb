@@ -136,7 +136,10 @@ module RubyLLM
             model = Models.find model_id, provider
           rescue ModelNotFoundError
             # Allow raw model IDs for BedrockConverse (they use ARN-style IDs not in registry)
-            if %w[bedrock_converse].include?(provider.to_s)
+            # Also allow cross-region prefixed Bedrock model IDs (e.g. global.*, us-west-2.*)
+            bedrock_cross_region = provider.to_s == 'bedrock' &&
+                                   Providers::Bedrock::Models.region_prefixed?(model_id)
+            if %w[bedrock_converse].include?(provider.to_s) || bedrock_cross_region
               provider_class = Provider.providers[provider.to_sym]
               provider_instance = provider_class.new(config)
               model = Model::Info.default(model_id, provider_instance.slug)
@@ -514,6 +517,9 @@ module RubyLLM
     def resolve_bedrock_region_id(model_id)
       region = RubyLLM.config.bedrock_region.to_s
       return model_id if region.empty?
+
+      # If model already has an explicit region prefix, preserve it as-is
+      return model_id if Providers::Bedrock::Models.region_prefixed?(model_id)
 
       candidate_id = Providers::Bedrock::Models.with_region_prefix(model_id, region)
       return model_id if candidate_id == model_id

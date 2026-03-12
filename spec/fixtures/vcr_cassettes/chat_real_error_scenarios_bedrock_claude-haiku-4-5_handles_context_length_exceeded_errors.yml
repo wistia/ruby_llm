@@ -5,32 +5,30 @@ http_interactions:
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
     body:
       encoding: UTF-8
-      string: '{"messages":[{"role":"user","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"text":"Hi"}]}],"inferenceConfig":{"maxTokens":4096}}'
+      string: '{"messages":[{"role":"user","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"text":"Hi"}]}],"inferenceConfig":{}}'
     headers:
       User-Agent:
       - Faraday v2.14.0
-      Host:
-      - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20260312T160427Z
+      - 20260312T160424Z
       X-Amz-Content-Sha256:
-      - 4db19dc1465cf5eabd86fb145897819d3b9189c45dcba73348a4ab6a0042db7f
+      - 55c2ebe2434295cc9874d7c4cac19f2b478ee12be2a057acb1a85087330a2ba0
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
       Content-Type:
       - application/json
-      Accept:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
   response:
     status:
       code: 403
       message: Forbidden
     headers:
       Date:
-      - Thu, 12 Mar 2026 16:04:29 GMT
+      - Thu, 12 Mar 2026 16:04:26 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -38,11 +36,11 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 36bda844-20d1-4078-a25c-4875bffe45f5
+      - 8705cc3d-035d-4e4a-89aa-b92e7abf2a5e
       X-Amzn-Errortype:
       - UnrecognizedClientException:http://internal.amazon.com/coral/com.amazon.coral.service/
     body:
       encoding: UTF-8
       string: '{"message":"The security token included in the request is invalid."}'
-  recorded_at: Thu, 12 Mar 2026 16:04:29 GMT
+  recorded_at: Thu, 12 Mar 2026 16:04:26 GMT
 recorded_with: VCR 6.3.1

@@ -77,7 +77,13 @@ module RubyLLM
         @log_regexp_timeout = value
       end
     end
-    
+
+    option :bedrock_api_key, nil
+    option :bedrock_secret_key, nil
+    option :bedrock_region, nil
+    option :bedrock_session_token, nil
+    option :bedrock_bearer_token, nil
+
     # Aliases for bedrock_converse provider (shares credentials with bedrock)
     alias bedrock_converse_api_key bedrock_api_key
     alias bedrock_converse_api_key= bedrock_api_key=

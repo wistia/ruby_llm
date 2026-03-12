@@ -79,7 +79,7 @@ RSpec.describe RubyLLM::Models, '.resolve with Bedrock models' do
       let(:cross_region_models) do
         [
           'global.amazon.nova-2-lite-v1:0',
-          'us-west-2.anthropic.claude-3-5-sonnet-20241022-v2:0'
+          'us.anthropic.claude-3-5-sonnet-20241022-v2:0'
         ]
       end
 

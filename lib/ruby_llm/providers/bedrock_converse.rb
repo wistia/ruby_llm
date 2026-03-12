@@ -106,6 +106,10 @@ module RubyLLM
           BedrockConverse::Capabilities
         end
 
+        def configuration_options
+          %i[bedrock_api_key bedrock_secret_key bedrock_region bedrock_session_token bedrock_bearer_token]
+        end
+
         def configuration_requirements
           %i[bedrock_api_key bedrock_secret_key bedrock_region]
         end

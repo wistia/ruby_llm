@@ -5,22 +5,22 @@ http_interactions:
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
     body:
       encoding: UTF-8
-      string: '{"messages":[{"role":"user","content":[{"text":"What''s the weather
-        in Berlin? (52.5200, 13.4050)"}]}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
+      string: '{"messages":[{"role":"user","content":[{"text":"What''s the fall of
+        Rome?"}]}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
         current weather for a location","inputSchema":{"json":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}}]}}'
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}}],"toolChoice":{"tool":{"name":"weather"}}}}'
     headers:
       User-Agent:
       - Faraday v2.14.0
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20260312T162108Z
+      - 20260312T180100Z
       X-Amz-Security-Token:
       - "<AWS_SESSION_TOKEN>"
       X-Amz-Content-Sha256:
-      - cfafee22153a0469b3c63ee5b4e86a456ac958b092c353fb714079d1683014aa
+      - cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -36,27 +36,27 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 12 Mar 2026 16:21:11 GMT
+      - Thu, 12 Mar 2026 18:01:02 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '450'
+      - '452'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - e855d5a4-5e2d-4629-bade-25f3a1667f69
+      - cccccccc-bbbb-cccc-dddd-eeeeeeeeeeee
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":2733},"output":{"message":{"content":[{"toolUse":{"input":{"latitude":"52.5200","longitude":"13.4050"},"name":"weather","toolUseId":"tooluse_WRc8eBWoKfq3s2yOXzJTkQ","type":"tool_use"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":633,"outputTokens":75,"serverToolUsage":{},"totalTokens":708}}'
-  recorded_at: Thu, 12 Mar 2026 16:21:11 GMT
+      string: '{"metrics":{"latencyMs":2600},"output":{"message":{"content":[{"toolUse":{"input":{"latitude":"41.9028","longitude":"12.4964"},"name":"weather","toolUseId":"tooluse_specific_abc123","type":"tool_use"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":655,"outputTokens":75,"serverToolUsage":{},"totalTokens":730}}'
+  recorded_at: Thu, 12 Mar 2026 18:01:02 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
     body:
       encoding: UTF-8
-      string: '{"messages":[{"role":"user","content":[{"text":"What''s the weather
-        in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_WRc8eBWoKfq3s2yOXzJTkQ","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_WRc8eBWoKfq3s2yOXzJTkQ","content":[{"text":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}]}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
+      string: '{"messages":[{"role":"user","content":[{"text":"What''s the fall of
+        Rome?"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_specific_abc123","name":"weather","input":{"latitude":"41.9028","longitude":"12.4964"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_specific_abc123","content":[{"text":"Current
+        weather at 41.9028, 12.4964: 15 degrees C, Wind: 10 km/h"}]}}]}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
         current weather for a location","inputSchema":{"json":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}}]}}'
@@ -66,11 +66,11 @@ http_interactions:
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20260312T162111Z
+      - 20260312T180105Z
       X-Amz-Security-Token:
       - "<AWS_SESSION_TOKEN>"
       X-Amz-Content-Sha256:
-      - cafadf89498487d9a2cc6d108d7d54b2fa8f8c62ead020b72bbdcd956c4ecdb7
+      - dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -86,18 +86,19 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 12 Mar 2026 16:21:15 GMT
+      - Thu, 12 Mar 2026 18:01:08 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '444'
+      - '352'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 230a8574-ffa0-41db-95d7-1209da76462b
+      - dddddddd-bbbb-cccc-dddd-eeeeeeeeeeee
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6MzMyOX0sIm91dHB1dCI6eyJtZXNzYWdlIjp7ImNvbnRlbnQiOlt7InRleHQiOiJUaGUgd2VhdGhlciBpbiBCZXJsaW4gaXMgY3VycmVudGx5ICoqMTXCsEMgKDU5wrBGKSoqIHdpdGggYSAqKndpbmQgc3BlZWQgb2YgMTAga20vaCAoNiBtcGgpKiouIEl0J3MgYSBtaWxkIGRheSB3aXRoIGdlbnRsZSB3aW5kcyEifV0sInJvbGUiOiJhc3Npc3RhbnQifX0sInN0b3BSZWFzb24iOiJlbmRfdHVybiIsInVzYWdlIjp7ImNhY2hlUmVhZElucHV0VG9rZW5Db3VudCI6MCwiY2FjaGVSZWFkSW5wdXRUb2tlbnMiOjAsImNhY2hlV3JpdGVJbnB1dFRva2VuQ291bnQiOjAsImNhY2hlV3JpdGVJbnB1dFRva2VucyI6MCwiaW5wdXRUb2tlbnMiOjc0OCwib3V0cHV0VG9rZW5zIjo0Niwic2VydmVyVG9vbFVzYWdlIjp7fSwidG90YWxUb2tlbnMiOjc5NH19
-  recorded_at: Thu, 12 Mar 2026 16:21:15 GMT
+      encoding: UTF-8
+      string: '{"metrics":{"latencyMs":3100},"output":{"message":{"content":[{"text":"I
+        apologize for the confusion! You asked about the historical Fall of Rome,
+        not the weather. The fall of Rome occurred in 476 CE."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":752,"outputTokens":35,"serverToolUsage":{},"totalTokens":787}}'
+  recorded_at: Thu, 12 Mar 2026 18:01:08 GMT
 recorded_with: VCR 6.3.1

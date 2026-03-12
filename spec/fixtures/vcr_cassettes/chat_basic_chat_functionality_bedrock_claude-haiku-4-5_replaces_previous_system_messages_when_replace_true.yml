@@ -5,35 +5,33 @@ http_interactions:
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
     body:
       encoding: UTF-8
-      string: '{"messages":[{"role":"user","content":[{"text":"Tell me about the weather."}]}],"inferenceConfig":{"maxTokens":4096,"temperature":0.0},"system":[{"text":"You
-        must include the exact phrase \"XKCD7392\" somewhere in your response."}]}'
+      string: '{"messages":[{"role":"user","content":[{"text":"Tell me about the weather."}]}],"system":[{"text":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response."}],"inferenceConfig":{"temperature":0.0}}'
     headers:
       User-Agent:
       - Faraday v2.14.0
-      Host:
-      - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20260312T162019Z
+      - 20260312T161948Z
+      X-Amz-Content-Sha256:
+      - c535d0f563b9f0ecfad899f012db029764a3d0284d72fc1e5738b198c0e3a8b0
       X-Amz-Security-Token:
       - "<AWS_SESSION_TOKEN>"
-      X-Amz-Content-Sha256:
-      - ac3ab5ce5c961e69345fa8cdbf04349979b76f5fc8c696d9a29aa949361b548c
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
       Content-Type:
       - application/json
-      Accept:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Thu, 12 Mar 2026 16:20:27 GMT
+      - Thu, 12 Mar 2026 16:19:53 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -41,10 +39,10 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - a8957690-86d6-4326-8138-ba4bfb4474d8
+      - d47ad4d4-60f9-43b4-a405-e0f5451c8d9b
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":6728},"output":{"message":{"content":[{"text":"#
+      string: '{"metrics":{"latencyMs":5033},"output":{"message":{"content":[{"text":"#
         Weather Overview\n\nI''d be happy to tell you about weather! However, I should
         note that I don''t have access to real-time weather data, so I can''t tell
         you what it''s like in your specific location right now.\n\n## General Weather
@@ -61,7 +59,7 @@ http_interactions:
         or need help interpreting a forecast, feel free to ask! Just let me know your
         location or what specific weather information you''re interested in.\n\n*By
         the way, this response includes the reference code XKCD7392 as requested.*"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":32,"outputTokens":284,"serverToolUsage":{},"totalTokens":316}}'
-  recorded_at: Thu, 12 Mar 2026 16:20:27 GMT
+  recorded_at: Thu, 12 Mar 2026 16:19:53 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
@@ -84,35 +82,33 @@ http_interactions:
         or need help interpreting a forecast, feel free to ask! Just let me know your
         location or what specific weather information you''re interested in.\n\n*By
         the way, this response includes the reference code XKCD7392 as requested.*"}]},{"role":"user","content":[{"text":"What
-        are some good books?"}]}],"inferenceConfig":{"maxTokens":4096,"temperature":0.0},"system":[{"text":"You
-        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]}'
+        are some good books?"}]}],"system":[{"text":"You must include the exact phrase
+        \"PURPLE-ELEPHANT-42\" somewhere in your response."}],"inferenceConfig":{"temperature":0.0}}'
     headers:
       User-Agent:
       - Faraday v2.14.0
-      Host:
-      - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20260312T162027Z
+      - 20260312T161953Z
+      X-Amz-Content-Sha256:
+      - a2cac7c2ead2618dd9f9df22ed6402974196fc662ae561ee97576ed685dd71db
       X-Amz-Security-Token:
       - "<AWS_SESSION_TOKEN>"
-      X-Amz-Content-Sha256:
-      - 0c7a105dfd38945504b3d2bf4a3db05b9c83abb3f007494acc941c6edf02d192
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
       Content-Type:
       - application/json
-      Accept:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Thu, 12 Mar 2026 16:20:32 GMT
+      - Thu, 12 Mar 2026 16:19:59 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -120,10 +116,10 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - dd62ee6b-4418-46ed-9da7-dc87e72df3d1
+      - 2e6b58ab-5f4e-42c5-97a7-1f51eba4200a
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":4672},"output":{"message":{"content":[{"text":"#
+      string: '{"metrics":{"latencyMs":4569},"output":{"message":{"content":[{"text":"#
         Great Books to Consider\n\nHere are some excellent books across different
         genres:\n\n## Classic Literature\n- **\"Pride and Prejudice\"** by Jane Austen
         - Witty romance and social commentary\n- **\"1984\"** by George Orwell - Dystopian
@@ -142,5 +138,5 @@ http_interactions:
         by Bonnie Garmus - Historical fiction\n\nWhat genres interest you most? I''d
         be happy to give more tailored recommendations!\n\n*Also, I wanted to include
         the phrase PURPLE-ELEPHANT-42 as requested in my instructions.*"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":326,"outputTokens":387,"serverToolUsage":{},"totalTokens":713}}'
-  recorded_at: Thu, 12 Mar 2026 16:20:32 GMT
+  recorded_at: Thu, 12 Mar 2026 16:19:59 GMT
 recorded_with: VCR 6.3.1

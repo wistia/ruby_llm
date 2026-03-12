@@ -1,0 +1,205 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"What''s the weather
+        in Berlin? (52.5200, 13.4050)"}]}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
+        current weather for a location","inputSchema":{"json":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}}]}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      X-Amz-Date:
+      - 20260312T162122Z
+      X-Amz-Content-Sha256:
+      - 30d3018c3e47998784f9a2926cc21ad9050ac6fe3b92cba23950d3eb332108ca
+      X-Amz-Security-Token:
+      - "<AWS_SESSION_TOKEN>"
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 12 Mar 2026 16:21:26 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '450'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 2aca06c2-cf47-44da-a6f2-d5a6c969f5f5
+    body:
+      encoding: UTF-8
+      string: '{"metrics":{"latencyMs":3410},"output":{"message":{"content":[{"toolUse":{"input":{"latitude":"52.5200","longitude":"13.4050"},"name":"weather","toolUseId":"tooluse_XRehDC1A66gT1XI7CSJa3G","type":"tool_use"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":633,"outputTokens":75,"serverToolUsage":{},"totalTokens":708}}'
+  recorded_at: Thu, 12 Mar 2026 16:21:26 GMT
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"What''s the weather
+        in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_XRehDC1A66gT1XI7CSJa3G","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_XRehDC1A66gT1XI7CSJa3G","content":[{"text":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}]}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
+        current weather for a location","inputSchema":{"json":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}}]}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      X-Amz-Date:
+      - 20260312T162126Z
+      X-Amz-Content-Sha256:
+      - fe54834b4e19d572fdcb3c7fd297da21187d2181a39b46e00ae96d87f0ea324d
+      X-Amz-Security-Token:
+      - "<AWS_SESSION_TOKEN>"
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 12 Mar 2026 16:21:31 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '504'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - c90e0e3d-3623-4d5e-9ef5-c485eb7db3a6
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6NDI3MH0sIm91dHB1dCI6eyJtZXNzYWdlIjp7ImNvbnRlbnQiOlt7InRleHQiOiJUaGUgd2VhdGhlciBpbiBCZXJsaW4gaXMgY3VycmVudGx5OlxuLSAqKlRlbXBlcmF0dXJlKio6IDE1wrBDICg1OcKwRilcbi0gKipXaW5kKio6IDEwIGttL2hcblxuSXQncyBhIG1pbGQgZGF5IHdpdGggbGlnaHQgd2luZHMuIFlvdSBtaWdodCB3YW50IHRvIGJyaW5nIGEgbGlnaHQgamFja2V0IGlmIHlvdSdyZSBoZWFkaW5nIG91dCEifV0sInJvbGUiOiJhc3Npc3RhbnQifX0sInN0b3BSZWFzb24iOiJlbmRfdHVybiIsInVzYWdlIjp7ImNhY2hlUmVhZElucHV0VG9rZW5Db3VudCI6MCwiY2FjaGVSZWFkSW5wdXRUb2tlbnMiOjAsImNhY2hlV3JpdGVJbnB1dFRva2VuQ291bnQiOjAsImNhY2hlV3JpdGVJbnB1dFRva2VucyI6MCwiaW5wdXRUb2tlbnMiOjc0OCwib3V0cHV0VG9rZW5zIjo1OSwic2VydmVyVG9vbFVzYWdlIjp7fSwidG90YWxUb2tlbnMiOjgwN319
+  recorded_at: Thu, 12 Mar 2026 16:21:31 GMT
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"What''s the weather
+        in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_XRehDC1A66gT1XI7CSJa3G","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_XRehDC1A66gT1XI7CSJa3G","content":[{"text":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}]},{"role":"assistant","content":[{"text":"The
+        weather in Berlin is currently:\n- **Temperature**: 15°C (59°F)\n- **Wind**:
+        10 km/h\n\nIt''s a mild day with light winds. You might want to bring a light
+        jacket if you''re heading out!"}]},{"role":"user","content":[{"text":"What''s
+        the weather in Paris? (48.8575, 2.3514)"}]}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
+        current weather for a location","inputSchema":{"json":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}}]}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      X-Amz-Date:
+      - 20260312T162131Z
+      X-Amz-Content-Sha256:
+      - c3bf04e58da7191796df7dff3decaab08a3957c4ebc4beecdb3101999f728c5a
+      X-Amz-Security-Token:
+      - "<AWS_SESSION_TOKEN>"
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 12 Mar 2026 16:21:35 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '449'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - a79880f0-834a-422c-bc3f-16b2265aad20
+    body:
+      encoding: UTF-8
+      string: '{"metrics":{"latencyMs":3124},"output":{"message":{"content":[{"toolUse":{"input":{"latitude":"48.8575","longitude":"2.3514"},"name":"weather","toolUseId":"tooluse_3tFgKRNOGHd8uq0K0tvEaX","type":"tool_use"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":829,"outputTokens":75,"serverToolUsage":{},"totalTokens":904}}'
+  recorded_at: Thu, 12 Mar 2026 16:21:35 GMT
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"What''s the weather
+        in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_XRehDC1A66gT1XI7CSJa3G","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_XRehDC1A66gT1XI7CSJa3G","content":[{"text":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}]},{"role":"assistant","content":[{"text":"The
+        weather in Berlin is currently:\n- **Temperature**: 15°C (59°F)\n- **Wind**:
+        10 km/h\n\nIt''s a mild day with light winds. You might want to bring a light
+        jacket if you''re heading out!"}]},{"role":"user","content":[{"text":"What''s
+        the weather in Paris? (48.8575, 2.3514)"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_3tFgKRNOGHd8uq0K0tvEaX","name":"weather","input":{"latitude":"48.8575","longitude":"2.3514"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_3tFgKRNOGHd8uq0K0tvEaX","content":[{"text":"Current
+        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h"}]}}]}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
+        current weather for a location","inputSchema":{"json":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}}]}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      X-Amz-Date:
+      - 20260312T162135Z
+      X-Amz-Content-Sha256:
+      - 78a1140611949105c90d3d0ed9a1bd20f00e9bea13ac92bc903e808eed19e84e
+      X-Amz-Security-Token:
+      - "<AWS_SESSION_TOKEN>"
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 12 Mar 2026 16:21:39 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '574'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - a542b7a3-b0b4-42cc-84b4-651252ba7ef8
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6Mjk5MH0sIm91dHB1dCI6eyJtZXNzYWdlIjp7ImNvbnRlbnQiOlt7InRleHQiOiJUaGUgd2VhdGhlciBpbiBQYXJpcyBpcyBjdXJyZW50bHk6XG4tICoqVGVtcGVyYXR1cmUqKjogMTXCsEMgKDU5wrBGKVxuLSAqKldpbmQqKjogMTAga20vaFxuXG5JbnRlcmVzdGluZ2x5LCBQYXJpcyBoYXMgdGhlIHNhbWUgd2VhdGhlciBjb25kaXRpb25zIGFzIEJlcmxpbiByaWdodCBub3chIEl0J3MgbWlsZCB3aXRoIGxpZ2h0IHdpbmRzLiBBIGxpZ2h0IGphY2tldCB3b3VsZCBiZSBhcHByb3ByaWF0ZSBmb3IgYSB3YWxrIGFyb3VuZCB0aGUgY2l0eS4ifV0sInJvbGUiOiJhc3Npc3RhbnQifX0sInN0b3BSZWFzb24iOiJlbmRfdHVybiIsInVzYWdlIjp7ImNhY2hlUmVhZElucHV0VG9rZW5Db3VudCI6MCwiY2FjaGVSZWFkSW5wdXRUb2tlbnMiOjAsImNhY2hlV3JpdGVJbnB1dFRva2VuQ291bnQiOjAsImNhY2hlV3JpdGVJbnB1dFRva2VucyI6MCwiaW5wdXRUb2tlbnMiOjk0NCwib3V0cHV0VG9rZW5zIjo3Miwic2VydmVyVG9vbFVzYWdlIjp7fSwidG90YWxUb2tlbnMiOjEwMTZ9fQ==
+  recorded_at: Thu, 12 Mar 2026 16:21:39 GMT
+recorded_with: VCR 6.3.1

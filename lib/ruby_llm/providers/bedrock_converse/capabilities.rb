@@ -51,6 +51,14 @@ module RubyLLM
           false
         end
 
+        def supports_tool_choice?(model_id)
+          supports_functions?(model_id)
+        end
+
+        def supports_tool_parallel_control?(_model_id)
+          false
+        end
+
         def supports_json_mode?(model_id)
           true
         end

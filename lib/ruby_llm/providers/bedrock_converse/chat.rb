@@ -152,14 +152,15 @@ module RubyLLM
           "model/#{@model_id}/converse"
         end
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil, thinking: nil) # rubocop:disable Lint/UnusedMethodArgument,Metrics/ParameterLists
+        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil, thinking: nil, tool_prefs: nil) # rubocop:disable Metrics/ParameterLists
           @model_id = model.id
+          tool_prefs ||= {}
 
           system_messages, chat_messages = Anthropic::Chat.separate_messages(messages)
           system_content = build_converse_system_content(system_messages)
 
           build_base_payload(chat_messages, model).tap do |payload|
-            add_converse_optional_fields(payload, system_content:, tools:, temperature:, model:)
+            add_converse_optional_fields(payload, system_content:, tools:, temperature:, model:, tool_prefs:)
           end
         end
 
@@ -245,7 +246,7 @@ module RubyLLM
           end
         end
 
-        def add_converse_optional_fields(payload, system_content:, tools:, temperature:, model:)
+        def add_converse_optional_fields(payload, system_content:, tools:, temperature:, model:, tool_prefs: nil)
           # Add inferenceConfig
           inference_config = {}
           inference_config[:maxTokens] = model.max_tokens || 4096
@@ -257,9 +258,21 @@ module RubyLLM
 
           # Add tools
           if tools.any?
-            payload[:toolConfig] = {
-              tools: tools.values.map { |t| format_tool_for_converse(t) }
-            }
+            tool_config = { tools: tools.values.map { |t| format_tool_for_converse(t) } }
+
+            choice = (tool_prefs || {})[:choice]
+            tool_choice = build_converse_tool_choice(choice)
+            tool_config[:toolChoice] = tool_choice if tool_choice
+
+            payload[:toolConfig] = tool_config
+          end
+        end
+
+        def build_converse_tool_choice(choice)
+          case choice
+          when :required then { any: {} }
+          when nil, :auto, :none then nil
+          else { tool: { name: choice.to_s } }
           end
         end
 

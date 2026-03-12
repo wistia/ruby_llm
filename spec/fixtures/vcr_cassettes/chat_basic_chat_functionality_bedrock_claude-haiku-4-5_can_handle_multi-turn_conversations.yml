@@ -1,0 +1,101 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"Who is the creator
+        of the programming language Ruby?"}]}],"inferenceConfig":{}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      X-Amz-Date:
+      - 20260312T161934Z
+      X-Amz-Content-Sha256:
+      - 7cdce4469486510945b0d56d8a6dc5cdbcc21a8fdf3564f9a6ffe3c2768debe2
+      X-Amz-Security-Token:
+      - "<AWS_SESSION_TOKEN>"
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 12 Mar 2026 16:19:38 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '581'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 3f87a631-d139-4022-a9e5-2e99069121fa
+    body:
+      encoding: UTF-8
+      string: '{"metrics":{"latencyMs":3722},"output":{"message":{"content":[{"text":"Ruby
+        was created by **Yukihiro Matsumoto** (often known as \"Matz\") in 1995. Matsumoto
+        is a Japanese computer scientist who designed Ruby to be a simple and productive
+        programming language, combining features from languages he liked such as Perl,
+        Smalltalk, and Lisp."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":17,"outputTokens":73,"serverToolUsage":{},"totalTokens":90}}'
+  recorded_at: Thu, 12 Mar 2026 16:19:38 GMT
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"Who is the creator
+        of the programming language Ruby?"}]},{"role":"assistant","content":[{"text":"Ruby
+        was created by **Yukihiro Matsumoto** (often known as \"Matz\") in 1995. Matsumoto
+        is a Japanese computer scientist who designed Ruby to be a simple and productive
+        programming language, combining features from languages he liked such as Perl,
+        Smalltalk, and Lisp."}]},{"role":"user","content":[{"text":"What year did
+        he create Ruby?"}]}],"inferenceConfig":{}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      X-Amz-Date:
+      - 20260312T161938Z
+      X-Amz-Content-Sha256:
+      - 0cf3cd917f5e730ecf9198819168c9e6b541c32a5c72cdcaa422e6f057918d7e
+      X-Amz-Security-Token:
+      - "<AWS_SESSION_TOKEN>"
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 12 Mar 2026 16:19:42 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '359'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 7607baf3-9307-485a-9dd2-39d7fb69d968
+    body:
+      encoding: UTF-8
+      string: '{"metrics":{"latencyMs":3166},"output":{"message":{"content":[{"text":"Yukihiro
+        Matsumoto created Ruby in **1995**."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":100,"outputTokens":18,"serverToolUsage":{},"totalTokens":118}}'
+  recorded_at: Thu, 12 Mar 2026 16:19:42 GMT
+recorded_with: VCR 6.3.1

@@ -1,0 +1,90 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse-stream
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"Count from 1 to 3"}]}],"inferenceConfig":{"temperature":0.0}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      X-Amz-Date:
+      - 20260312T162037Z
+      X-Amz-Content-Sha256:
+      - 10084ecc17666e99007ad6e3dfa6773225ede4ac68b33f7b261cdee9aab7ea79
+      X-Amz-Security-Token:
+      - "<AWS_SESSION_TOKEN>"
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
+      Content-Type:
+      - application/json
+      Accept:
+      - application/vnd.amazon.eventstream
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 12 Mar 2026 16:20:40 GMT
+      Content-Type:
+      - application/vnd.amazon.eventstream
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 3e6e59cd-7db8-4223-b221-9b05fa4edf4b
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        AAAAjQAAAFKpMZuSCzpldmVudC10eXBlBwAMbWVzc2FnZVN0YXJ0DTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsicCI6ImFiY2RlZmdoaWprbG1ub3AiLCJyb2xlIjoiYXNzaXN0YW50In20BGRuAAAAtQAAAFdICpxaCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IjFcbjJcbjMifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dSJ9rW8i8gAAAJcAAABWhAzQqAs6ZXZlbnQtdHlwZQcAEGNvbnRlbnRCbG9ja1N0b3ANOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnMifYAAOHgAAACHAAAAUXqI0okLOmV2ZW50LXR5cGUHAAttZXNzYWdlU3RvcA06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7InAiOiJhYmNkZWYiLCJzdG9wUmVhc29uIjoiZW5kX3R1cm4ifcN5B1QAAADjAAAATpsyDvELOmV2ZW50LXR5cGUHAAhtZXRhZGF0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7Im1ldHJpY3MiOnsibGF0ZW5jeU1zIjoyNzgzfSwicCI6ImFiY2RlZmdoaWprbG1uIiwidXNhZ2UiOnsiaW5wdXRUb2tlbnMiOjE1LCJvdXRwdXRUb2tlbnMiOjksInNlcnZlclRvb2xVc2FnZSI6e30sInRvdGFsVG9rZW5zIjoyNH19jSVY4A==
+  recorded_at: Thu, 12 Mar 2026 16:20:40 GMT
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"Count from 1 to 3"}]}],"inferenceConfig":{"temperature":0.0}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      X-Amz-Date:
+      - 20260312T162040Z
+      X-Amz-Content-Sha256:
+      - 10084ecc17666e99007ad6e3dfa6773225ede4ac68b33f7b261cdee9aab7ea79
+      X-Amz-Security-Token:
+      - "<AWS_SESSION_TOKEN>"
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 12 Mar 2026 16:20:44 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '319'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 53f1240e-c3f9-4f1d-942a-18e7db819d20
+    body:
+      encoding: UTF-8
+      string: '{"metrics":{"latencyMs":2707},"output":{"message":{"content":[{"text":"1\n2\n3"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":15,"outputTokens":9,"serverToolUsage":{},"totalTokens":24}}'
+  recorded_at: Thu, 12 Mar 2026 16:20:44 GMT
+recorded_with: VCR 6.3.1
